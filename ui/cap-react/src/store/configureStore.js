@@ -18,13 +18,16 @@ function configureStoreProd(initialState) {
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
     reactRouterMiddleware,
-    thunk
+    thunk,
   ];
+
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
 
   const store = createStore(
     rootReducer(history),
     initialState,
-    compose(applyMiddleware(...middlewares))
+    composeEnhancers(applyMiddleware(...middlewares))
   );
 
   return store;
@@ -46,7 +49,7 @@ function configureStoreDev(initialState) {
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
     reactRouterMiddleware,
     thunk,
-    loggerMiddleware
+    loggerMiddleware,
   ];
 
   const composeEnhancers =
