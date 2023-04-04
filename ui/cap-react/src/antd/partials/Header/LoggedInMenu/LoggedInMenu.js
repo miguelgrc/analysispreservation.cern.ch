@@ -28,12 +28,12 @@ const LoggedInMenu = ({ permissions, logout, roles }) => {
   return (
     <React.Fragment>
       <DraftCreate
-        visible={displayCreate}
+        open={displayCreate}
         onCancel={() => setDisplayCreate(displayCreate => !displayCreate)}
       />
 
       <Modal
-        visible={displayHowToSearch}
+        open={displayHowToSearch}
         onCancel={() => setDisplayHowToSearch(false)}
         background="#f5f5f5"
         title="How to Search"
