@@ -36,7 +36,7 @@ const ObjectFieldTemplate = ({
 
   const findSchemaType = element => findSchema(element).type;
 
-  const findUiSchema = element => element.content.props.uiSchema;
+  const findUiSchema = element => element.content.props.uiSchema || {};
 
   const findUiSchemaField = element => findUiSchema(element)["ui:field"];
 

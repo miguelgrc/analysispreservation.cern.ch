@@ -1,8 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { Button, Row, Space, Tooltip } from "antd";
-import Text from "antd/lib/typography/Text";
+import { Button, Row, Space, Tooltip, Typography } from "antd";
 import { ImportOutlined, MailOutlined } from "@ant-design/icons";
 import Markdown from "../../partials/Markdown/Markdown";
 
