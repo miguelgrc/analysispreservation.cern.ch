@@ -203,7 +203,7 @@ const Permissions = ({
 
   const [displayModal, setDisplayModal] = useState(false);
   return (
-    <React.Fragment>
+    <>
       <Modal
         open={displayModal}
         onCancel={() => {
@@ -268,7 +268,7 @@ const Permissions = ({
           pagination={{ pageSize: 5 }}
         />
       </Card>
-    </React.Fragment>
+    </>
   );
 };
 

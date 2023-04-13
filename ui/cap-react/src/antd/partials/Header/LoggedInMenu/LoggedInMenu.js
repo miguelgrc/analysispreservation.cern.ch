@@ -16,7 +16,7 @@ import {
 } from "@ant-design/icons";
 import { Menu, Modal } from "antd";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const { Item, SubMenu, ItemGroup, Divider } = Menu;
@@ -26,7 +26,7 @@ const LoggedInMenu = ({ permissions, logout, roles }) => {
   const [displayHowToSearch, setDisplayHowToSearch] = useState(false);
 
   return (
-    <React.Fragment>
+    <>
       <DraftCreate
         open={displayCreate}
         onCancel={() => setDisplayCreate(displayCreate => !displayCreate)}
@@ -118,7 +118,7 @@ const LoggedInMenu = ({ permissions, logout, roles }) => {
           </Item>
         </SubMenu>
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 
