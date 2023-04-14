@@ -180,7 +180,7 @@ const Permissions = ({
     setEmailsArray(emailsArray);
   }, [permissions]);
 
-  const fetchLDAPdata = _debounce(async ({ searchFor, searchInput }) => {
+  const fetchLDAPdata = debounce(async ({ searchFor, searchInput }) => {
     setTableLoading(true);
     const response = await axios.get(
       `/api/services/ldap/${searchFor}/mail?query=${searchInput}`
