@@ -1,10 +1,12 @@
-import axios from "axios";
-import { merge } from "lodash-es";
-import { fromJS } from "immutable";
-import { push } from "connected-react-router";
-import { notification } from "antd";
-import { CMS, CMS_NEW } from "../antd/routes";
 import { slugify, _initSchemaStructure } from "../antd/admin/utils";
+import { CMS, CMS_NEW } from "../antd/routes";
+import { notification } from "antd";
+
+import axios from "axios";
+import { push } from "connected-react-router";
+import { fromJS } from "immutable";
+import { merge } from "lodash-es";
+
 import { updateDepositGroups } from "./auth";
 
 export const ADD_PROPERTY = "ADD_PROPERTY";
@@ -88,6 +90,32 @@ export function selectProperty(path) {
   return {
     type: PROPERTY_SELECT,
     path,
+  };
+}
+
+export function updateRequired(path, fieldName, isRequired) {
+  return function (dispatch, getState) {
+    let schema = getState()
+      .schemaWizard.getIn(["current", "schema", ...path])
+      .toJS();
+
+    let required = schema.required || [];
+
+    if (isRequired) {
+      if (!required.includes(fieldName)) {
+        required.push(fieldName);
+      }
+    } else {
+      required = required.filter(e => e !== fieldName);
+    }
+
+    // TODO: If required is gonna be empty, just remove the property altogether
+    // TODO: If we remove an element from the tree, we should remove it from the required as well
+    // Objects have to be required always for validation to work inside
+
+    let updatedSchema = { ...schema, required };
+
+    dispatch(updateSchemaByPath(path, updatedSchema));
   };
 }
 

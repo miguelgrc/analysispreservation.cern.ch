@@ -1,4 +1,5 @@
 import { omit } from "lodash-es";
+
 export const transformSchema = schema => {
   const schemaFieldsToRemove = [
     "_access",
@@ -21,6 +22,7 @@ export const transformSchema = schema => {
     type: schema.type,
     properties: schema.properties,
     dependencies: schema.dependencies,
+    required: schema.required,
   };
   return schema;
 };

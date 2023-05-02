@@ -65,7 +65,7 @@ const extra = {
   optionsSchema: {
     readOnly: {
       type: "boolean",
-      title: "Do you want this field to be read only?",
+      title: "Read-only",
     },
   },
   optionsSchemaUiSchema: {
@@ -255,6 +255,10 @@ const simple = {
           type: "string",
           pattern: "^^[w]*$$",
         },
+        isRequired: {
+          title: "Required",
+          type: "boolean",
+        },
         readOnly: extra.optionsSchema.readOnly,
       },
     },
@@ -262,6 +266,9 @@ const simple = {
       readOnly: extra.optionsSchemaUiSchema.readOnly,
       pattern: {
         "ui:placeholder": "^.*$",
+      },
+      isRequired: {
+        "ui:widget": "required",
       },
     },
     optionsUiSchema: {
