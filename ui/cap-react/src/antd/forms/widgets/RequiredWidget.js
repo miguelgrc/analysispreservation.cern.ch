@@ -1,9 +1,16 @@
 import { Switch } from "antd";
 
-const RequiredWidget = ({ value, onChange, path, updateRequired }) => {
+const RequiredWidget = ({
+  value,
+  onChange,
+  path,
+  fullSchema,
+  updateRequired,
+}) => {
   const handleChange = checked => {
-    onChange(checked);
+    // onChange(checked);
     addRequiredToParent(path.get("path").toJS(), checked);
+    // onChange(checked);
   };
 
   const addRequiredToParent = (schemaPath, checked) => {
@@ -13,6 +20,28 @@ const RequiredWidget = ({ value, onChange, path, updateRequired }) => {
       updateRequired(parentPath, fieldName, checked);
       addRequiredToParent(parentPath, checked);
     }
+  };
+
+  const updateRequiredxx = (path, fieldName, isRequired) => {
+    let schema = fullSchema.getIn([...path]).toJS();
+
+    let required = schema.required || [];
+
+    if (isRequired) {
+      if (!required.includes(fieldName)) {
+        required.push(fieldName);
+      }
+    } else {
+      required = required.filter(e => e !== fieldName);
+    }
+
+    // TODO: If required is gonna be empty, just remove the property altogether
+    // TODO: If we remove an element from the tree, we should remove it from the required as well
+    // Objects have to be required always for validation to work inside
+
+    let updatedSchema = { ...schema, required };
+
+    return updatedSchema;
   };
 
   const findParentPath = schemaPath => {

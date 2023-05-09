@@ -1,6 +1,5 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
-import Form from "../../forms/Form";
+
 import {
   Col,
   Menu,
@@ -13,20 +12,24 @@ import {
   Button,
   Tooltip,
 } from "antd";
+
 import {
-  ArrowLeftOutlined,
   DiffOutlined,
   DownloadOutlined,
   FormOutlined,
+  HomeOutlined,
   NotificationOutlined,
   SaveOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { CMS } from "../../routes";
-import { configSchema } from "../utils/schemaSettings";
-import CodeViewer from "../../utils/CodeViewer";
 import { json } from "@codemirror/lang-json";
+import PropTypes from "prop-types";
+
+import Form from "../../forms/Form";
+import { CMS } from "../../routes";
 import CodeDiffViewer from "../../utils/CodeDiffViewer";
+import CodeViewer from "../../utils/CodeViewer";
+import { configSchema } from "../utils/schemaSettings";
 
 const { useBreakpoint } = Grid;
 const Header = ({
@@ -181,7 +184,8 @@ const Header = ({
                   title={
                     <Typography.Text>
                       Are you sure you want to go back to the admin screen?
-                      <br />You will lose all unsaved changes
+                      <br />
+                      You will lose all unsaved changes
                     </Typography.Text>
                   }
                   okType="link"
@@ -190,7 +194,7 @@ const Header = ({
                   placement="bottom"
                   onConfirm={() => pushPath(CMS)}
                 >
-                  <Button type="text" icon={<ArrowLeftOutlined />}>
+                  <Button type="text" icon={<HomeOutlined />}>
                     {screens.lg && "Admin Home Page"}
                   </Button>
                 </Popconfirm>

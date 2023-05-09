@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { selectProperty } from "../../../actions/schemaWizard";
+
+import { Col, Row, Tag, Typography } from "antd";
 
 import {
   AimOutlined,
@@ -22,7 +22,9 @@ import {
   UnorderedListOutlined,
   UpOutlined,
 } from "@ant-design/icons";
-import { Col, Row, Tag, Typography } from "antd";
+import { PropTypes } from "prop-types";
+
+import { selectProperty } from "../../../actions/schemaWizard";
 import { isItTheArrayField } from "../utils";
 
 const SchemaTreeItem = ({
@@ -113,7 +115,7 @@ const SchemaTreeItem = ({
                   style={{ fontSize: "12px" }}
                   ellipsis
                 >
-                  {schema.title || "Untitled field"}
+                  {schema.title}
                 </Typography.Text>
               </Col>
             </Row>
@@ -153,10 +155,7 @@ function mapDispatchToProps(dispatch) {
     selectProperty: path => dispatch(selectProperty(path)),
   };
 }
-export default connect(
-  state => state,
-  mapDispatchToProps
-)(SchemaTreeItem);
+export default connect(state => state, mapDispatchToProps)(SchemaTreeItem);
 
 let mapType2Icon = {
   object: <div>&#123;&#32;&#125;</div>,

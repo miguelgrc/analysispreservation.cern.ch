@@ -109,11 +109,25 @@ export function updateRequired(path, fieldName, isRequired) {
       required = required.filter(e => e !== fieldName);
     }
 
-    // TODO: If required is gonna be empty, just remove the property altogether
+    // TODO: If required is gonna be empty, just remove the property altogether -> DONE
     // TODO: If we remove an element from the tree, we should remove it from the required as well
     // Objects have to be required always for validation to work inside
 
-    let updatedSchema = { ...schema, required };
+    console.log(required);
+
+    let updatedSchema = { ...schema, patata: required };
+
+    if (!required.length) {
+      delete updatedSchema.required;
+    }
+    // let updatedSchema = {
+    //   ...schema,
+    //   required: ["oatata"],
+    // };
+
+    // When we have the name of an existing field inside required, for some reason the form "refreshes"
+    // weirdly causing the type change / dissapearing tree item. Seems like an RJSF issue more than anything
+    // in our FieldTemplate, becase adding something random to required doesn't cause the same behavior
 
     dispatch(updateSchemaByPath(path, updatedSchema));
   };

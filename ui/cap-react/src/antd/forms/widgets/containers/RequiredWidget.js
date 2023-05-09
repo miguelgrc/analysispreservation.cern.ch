@@ -1,9 +1,11 @@
 import { connect } from "react-redux";
-import RequiredWidget from "../RequiredWidget";
+
 import { updateRequired } from "../../../../actions/schemaWizard";
+import RequiredWidget from "../RequiredWidget";
 
 const mapStateToProps = state => ({
   path: state.schemaWizard.get("field"),
+  fullSchema: state.schemaWizard.getIn(["current", "schema"]),
 });
 
 const mapDispatchToProps = dispatch => ({

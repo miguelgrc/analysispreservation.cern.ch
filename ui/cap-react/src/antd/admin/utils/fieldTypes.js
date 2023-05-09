@@ -32,6 +32,10 @@ const common = {
       type: "string",
       description: "Provide a description to be displayed in your field",
     },
+    isRequired: {
+      title: "Required",
+      type: "boolean",
+    },
   },
   optionsUiSchema: {
     type: "object",
@@ -405,6 +409,9 @@ const simple = {
       },
     },
     optionsSchemaUiSchema: {
+      isRequired: {
+        "ui:widget": "required",
+      },
       readOnly: extra.optionsSchemaUiSchema.readOnly,
     },
     optionsUiSchema: {

@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Breadcrumb, Button, Col, Popconfirm, Row, Typography } from "antd";
-import { PageHeader } from "@ant-design/pro-layout";
-import Customize from "../containers/Customize";
+
+import {
+  Breadcrumb,
+  Button,
+  Col,
+  Popconfirm,
+  Row,
+  Typography,
+  Grid,
+} from "antd";
+
 import { DeleteOutlined } from "@ant-design/icons";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { PageHeader } from "@ant-design/pro-layout";
+import PropTypes from "prop-types";
+
+import Customize from "../containers/Customize";
+
+const { useBreakpoint } = Grid;
 const renderPath = pathToUpdate => {
   let prev;
   let content;
@@ -38,25 +50,22 @@ const PropertyEditor = ({ path, renameId, enableCreateMode, deleteByPath }) => {
   const [name, setName] = useState();
   const screens = useBreakpoint();
 
-  useEffect(
-    () => {
-      if (path) {
-        const p = path.getIn(["path"]).toJS();
-        if (p.length) {
-          setName(p.findLast(item => item !== "properties" && item != "items"));
-        } else {
-          setName("root");
-        }
+  useEffect(() => {
+    if (path) {
+      const p = path.getIn(["path"]).toJS();
+      if (p.length) {
+        setName(p.findLast(item => item !== "properties" && item != "items"));
+      } else {
+        setName("root");
       }
-    },
-    [path]
-  );
+    }
+  }, [path]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <PageHeader
         onBack={enableCreateMode}
-        title={screens.xl && "Field settings"}
+        title={(screens.xl || path.get("path").size == 0) && "Field settings"}
         extra={
           path.get("path").size > 0 && (
             <Popconfirm

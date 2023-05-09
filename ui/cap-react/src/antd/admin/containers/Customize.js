@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
-import CustomizeField from "../components/Customize";
+
 import {
   updateSchemaByPath,
-  updateUiSchemaByPath
+  updateUiSchemaByPath,
 } from "../../../actions/schemaWizard";
+import CustomizeField from "../components/Customize";
 
 function mapStateToProps(state) {
   const _path = state.schemaWizard.getIn(["field", "path"]);
@@ -14,7 +15,8 @@ function mapStateToProps(state) {
       schema: state.schemaWizard.getIn(["current", "schema", ..._path]),
       uiSchema: state.schemaWizard.getIn(["current", "uiSchema", ..._uiPath]),
       _path: _path,
-      _uiPath: _uiPath
+      _uiPath: _uiPath,
+      fullSchema: state.schemaWizard.getIn(["current", "schema"]),
     };
   return {};
 }
@@ -24,10 +26,7 @@ function mapDispatchToProps(dispatch) {
     onSchemaChange: (path, schema) =>
       dispatch(updateSchemaByPath(path, schema)),
     onUiSchemaChange: (path, schema) =>
-      dispatch(updateUiSchemaByPath(path, schema))
+      dispatch(updateUiSchemaByPath(path, schema)),
   };
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CustomizeField);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomizeField);

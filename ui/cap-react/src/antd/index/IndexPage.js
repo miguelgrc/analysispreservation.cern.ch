@@ -1,18 +1,15 @@
+import { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import SearchPage from "../search";
-
 import Dashboard from "../dashboard";
-
 import SettingsIndex from "../settings";
-import DraftsItemIndex from "../drafts";
-
 import CreateIndex from "../create";
-
 import PublishedIndex from "../published";
-
 import CollectionPage from "../collection";
 import ErrorPage from "../partials/Error";
+
+const DraftsItemIndex = lazy(() => import("../drafts"));
 
 import {
   HOME,

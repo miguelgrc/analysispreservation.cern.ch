@@ -1,10 +1,9 @@
+import { routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
 import { createStore, compose, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
 // import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from "redux-thunk";
-
-import { createBrowserHistory } from "history";
-import { routerMiddleware } from "connected-react-router";
-import { createLogger } from "redux-logger";
 
 import rootReducer from "../reducers";
 
@@ -46,7 +45,7 @@ function configureStoreDev(initialState) {
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
     reactRouterMiddleware,
     thunk,
-    loggerMiddleware,
+    // loggerMiddleware,
   ];
 
   const composeEnhancers =

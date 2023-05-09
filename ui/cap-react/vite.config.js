@@ -1,8 +1,8 @@
-import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
-import svgr from "vite-plugin-svgr";
 import fs from "fs/promises";
 import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig, loadEnv } from "vite";
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
       visualizer({
         filename: "bundle-stats.html",
       }),
+      // dotPathFixPlugin(),
     ],
     server: {
       // Needed for Docker
