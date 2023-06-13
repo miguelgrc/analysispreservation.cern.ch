@@ -19,7 +19,7 @@ import {
 } from "antd";
 import axios from "axios";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 const Collection = ({
@@ -100,7 +100,7 @@ const Collection = ({
               <Typography.Title level={3}>
                 {schemaData.has("fullname") && schemaData.get("fullname")}
               </Typography.Title>
-              <Tag color="geekblue">{schemaData.get("name")} </Tag>
+              <Tag color="geekblue">{schemaData.get("name")}</Tag>
             </Col>
             <Col>
               <Select

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Layout, Grid, Drawer } from "antd";
 import NavMenu from "./NavMenu";
@@ -8,7 +7,7 @@ const DraftItemNav = ({
   history,
   visibleMenuDrawer,
   onClose,
-  formErrors
+  formErrors,
 }) => {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -18,7 +17,7 @@ const DraftItemNav = ({
       title="Draft Navigation Menu"
       placement="left"
       onClose={onClose}
-      visible={visibleMenuDrawer}
+      open={visibleMenuDrawer}
       bodyStyle={{ padding: 0 }}
       key="menu"
     >
@@ -41,7 +40,7 @@ DraftItemNav.propTypes = {
   history: PropTypes.object,
   formErrors: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onClose: PropTypes.func,
-  visibleMenuDrawer: PropTypes.bool
+  visibleMenuDrawer: PropTypes.bool,
 };
 
 export default DraftItemNav;

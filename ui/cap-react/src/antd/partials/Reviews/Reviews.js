@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Card, Form, Input, Modal, Radio, Typography } from "antd";
 
@@ -42,9 +42,9 @@ const Reviews = ({
   if (!review) return null;
 
   return (
-    <React.Fragment>
+    <>
       <Modal
-        visible={showModal}
+        open={showModal}
         title="Add new Review"
         okText="Submit Review"
         okButtonProps={{
@@ -61,7 +61,7 @@ const Reviews = ({
             comment: "",
             reviewType: null,
           }}
-          onFinish={(values) => {
+          onFinish={values => {
             isReviewingPublished
               ? reviewPublished({
                   body: values.comment,
@@ -110,7 +110,7 @@ const Reviews = ({
         )}
       </Modal>
       <Modal
-        visible={showReviewsModal}
+        open={showReviewsModal}
         footer={
           <Button onClick={() => setShowReviewsModal(false)}>Close</Button>
         }
@@ -168,7 +168,7 @@ const Reviews = ({
           />
         </Card>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

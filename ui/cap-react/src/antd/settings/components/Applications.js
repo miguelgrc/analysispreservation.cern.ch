@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Card, Table, Button, Modal, Empty, Input, Form } from "antd";
 import EllipsisMiddle from "../../partials/EllipsisMiddle";
@@ -17,9 +17,9 @@ const Applications = ({
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Modal
-        visible={displayTokenModal}
+        open={displayTokenModal}
         onCancel={() => setDisplayTokenModal(false)}
         title="New OAuth Application"
         okText="Create Token"
@@ -125,7 +125,7 @@ const Applications = ({
           </Empty>
         )}
       </Card>
-    </React.Fragment>
+    </>
   );
 };
 

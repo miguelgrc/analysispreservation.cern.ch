@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
   DRAFT_ITEM,
   DRAFT_ITEM_EDIT,
   DRAFT_ITEM_SETTINGS,
-  DRAFT_ITEM_INTEGRATIONS
+  DRAFT_ITEM_INTEGRATIONS,
 } from "../../../routes";
 import { Switch, Route } from "react-router-dom";
 import DraftPreview from "../../containers/Overview";
@@ -25,7 +25,7 @@ const Drafts = ({
   match,
   getDraftById,
   metadata = { general_title: {} },
-  errors
+  errors,
 }) => {
   useEffect(() => {
     let { draft_id } = match.params;
@@ -108,7 +108,7 @@ Drafts.propTypes = {
   match: PropTypes.object,
   getDraftById: PropTypes.func,
   metadata: PropTypes.object,
-  errors: PropTypes.object
+  errors: PropTypes.object,
 };
 
 export default Drafts;

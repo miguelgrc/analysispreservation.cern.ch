@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Col, List, Modal, Row, Typography } from "antd";
 
@@ -29,28 +29,29 @@ const LayerArrayFieldTemplate = ({ items = [] }) => {
 
     return stringify ? stringify.reduce(reducer, "") : null;
   };
-  useEffect(
-    () => {
-      if (items && itemToDisplay)
-        setItemToDisplay({
-          index: itemToDisplay.index,
-          children: items[itemToDisplay.index].children,
-        });
-    },
-    [items]
-  );
+  useEffect(() => {
+    if (items && itemToDisplay)
+      setItemToDisplay({
+        index: itemToDisplay.index,
+        children: items[itemToDisplay.index].children,
+      });
+  }, [items]);
 
   const getActionsButtons = item => {
     if (!item.hasToolbar) return [];
 
     return [
-      <Row gutter={4}>
+      <Row key={item.key} gutter={4}>
         {(item.hasMoveUp || item.hasMoveDown) && (
           <Col>
             <Row>
               <Button
                 key="up"
-                icon={<ArrowUpOutlined style={{ fontSize: "14px" }} />}
+                icon={
+                  <Row justify="center">
+                    <ArrowUpOutlined />
+                  </Row>
+                }
                 onClick={item.onReorderClick(item.index, item.index - 1)}
                 disabled={item.disabled || item.readonly || !item.hasMoveUp}
                 type="link"
@@ -61,7 +62,11 @@ const LayerArrayFieldTemplate = ({ items = [] }) => {
             <Row>
               <Button
                 key="down"
-                icon={<ArrowDownOutlined style={{ fontSize: "14px" }} />}
+                icon={
+                  <Row justify="center">
+                    <ArrowDownOutlined />
+                  </Row>
+                }
                 onClick={item.onReorderClick(item.index, item.index + 1)}
                 disabled={item.disabled || item.readonly || !item.hasMoveDown}
                 type="link"
@@ -92,11 +97,11 @@ const LayerArrayFieldTemplate = ({ items = [] }) => {
   if (items.length < 1) return null;
 
   return (
-    <React.Fragment>
+    <>
       <Modal
         className="__Form__"
         destroyOnClose
-        visible={visible}
+        open={visible}
         onCancel={() => {
           setVisible(false);
           setItemToDisplay(null);
@@ -111,7 +116,7 @@ const LayerArrayFieldTemplate = ({ items = [] }) => {
       </Modal>
 
       <List
-        className="LayerArrayFieldList"
+        className="layerArrayFieldList"
         style={{ overflow: "auto" }}
         dataSource={items}
         renderItem={item => (
@@ -119,6 +124,12 @@ const LayerArrayFieldTemplate = ({ items = [] }) => {
             <List.Item
               className="layerListItem"
               actions={getActionsButtons(item)}
+              style={{
+                border: "1px solid #f0f0f0",
+                padding: "10px",
+                marginBottom: "5px",
+                backgroundColor: "white",
+              }}
             >
               <List.Item.Meta
                 title={
@@ -141,7 +152,7 @@ const LayerArrayFieldTemplate = ({ items = [] }) => {
           </ErrorFieldIndicator>
         )}
       />
-    </React.Fragment>
+    </>
   );
 };
 

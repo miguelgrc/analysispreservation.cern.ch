@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Card, Row, Col, Tag, Typography, Space } from "antd";
 import AuthPopUp from "./IntegrationPopUp";
@@ -9,7 +8,7 @@ import { services } from "../../utils/services";
 const Integrations = ({
   updateIntegrations,
   integrations,
-  removeIntegrations
+  removeIntegrations,
 }) => {
   return (
     <Card title="Integrations with other services">
@@ -64,7 +63,7 @@ const Integrations = ({
 Integrations.propTypes = {
   updateIntegrations: PropTypes.func,
   integrations: PropTypes.object,
-  removeIntegrations: PropTypes.func
+  removeIntegrations: PropTypes.func,
 };
 
 export default Integrations;

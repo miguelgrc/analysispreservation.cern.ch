@@ -1,7 +1,4 @@
-import React from "react";
-
 import { Row, Col, Button } from "antd";
-import { withConfigConsumer } from "antd/lib/config-provider/context";
 import PlusCircleOutlined from "@ant-design/icons/PlusCircleOutlined";
 import PropTypes from "prop-types";
 import ArrayFieldTemplateItem from "./ArrayFieldTemplateItem";
@@ -12,13 +9,11 @@ const FixedArrayFieldTemplate = ({
   className,
   disabled,
   formContext,
-  // formData,
   idSchema,
   items,
   options,
   onAddClick,
   readonly,
-  // registry,
   schema,
   title,
   uiSchema,
@@ -86,10 +81,7 @@ FixedArrayFieldTemplate.propTypes = {
   required: PropTypes.bool,
   schema: PropTypes.object,
   title: PropTypes.string,
-  TitleField: PropTypes.node,
   uiSchema: PropTypes.object,
 };
 
-export default withConfigConsumer({ prefixCls: "form" })(
-  FixedArrayFieldTemplate
-);
+export default FixedArrayFieldTemplate;

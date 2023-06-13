@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   Alert,
@@ -41,43 +41,30 @@ const Overview = ({
   loading,
   history,
 }) => {
-  const { users, roles } = useMemo(() => calculateCollaborators(access), [
-    access,
-  ]);
+  const { users, roles } = useMemo(
+    () => calculateCollaborators(access),
+    [access]
+  );
 
   const infoArray = [
     {
-      text: <Typography.Text>{revision} revision</Typography.Text>,
+      text: `${revision} revision`,
       icon: <InfoCircleOutlined />,
     },
     {
-      text: (
-        <Typography.Text>
-          {" "}
-          {users || 0} users / {roles || 0} roles
-        </Typography.Text>
-      ),
+      text: `${users || 0} users / ${roles || 0} roles`,
       icon: <UserOutlined />,
     },
     {
-      text: (
-        <Typography.Text>
-          {webhooks && webhooks.length} repositories
-        </Typography.Text>
-      ),
+      text: `${webhooks && webhooks.length} repositories`,
       icon: <CodeOutlined />,
     },
     {
-      text: <Typography.Text>{files && files.size} files</Typography.Text>,
+      text: `${files && files.size} files`,
       icon: <FolderOutlined />,
     },
     {
-      text: (
-        <Typography.Text>
-          {" "}
-          {(schema && schema.version) || "-"} schema version
-        </Typography.Text>
-      ),
+      text: `${(schema && schema.version) || "-"} schema version`,
       icon: <InfoCircleOutlined />,
     },
   ];
@@ -116,22 +103,21 @@ const Overview = ({
             }
           />
         )}
-        {mySchema &&
-          mySchema.name == "cms-stats-questionnaire" && (
-            <Alert
-              type="warning"
-              showIcon
-              message="Warning"
-              description={
-                <Typography.Text>
-                  For your {(mySchema && mySchema.fullname) || "document"} , to
-                  be <Typography.Text strong>reviewed</Typography.Text> you need
-                  to <Typography.Text strong>Publish</Typography.Text> it first
-                  (through settings tab)
-                </Typography.Text>
-              }
-            />
-          )}
+        {mySchema && mySchema.name == "cms-stats-questionnaire" && (
+          <Alert
+            type="warning"
+            showIcon
+            message="Warning"
+            description={
+              <Typography.Text>
+                For your {(mySchema && mySchema.fullname) || "document"} , to be{" "}
+                <Typography.Text strong>reviewed</Typography.Text> you need to{" "}
+                <Typography.Text strong>Publish</Typography.Text> it first
+                (through settings tab)
+              </Typography.Text>
+            }
+          />
+        )}
 
         <Card
           title="Metadata"
@@ -161,21 +147,20 @@ const Overview = ({
             </Space>
           }
         >
-          {schemas &&
-            schemas.schema && (
-              <div style={{ maxHeight: "30vh", overflowX: "hidden" }}>
-                <JSONSchemaPreviewer
-                  formData={metadata}
-                  schema={transformSchema(schemas.schema)}
-                  schemaType={mySchema}
-                  uiSchema={schemas.uiSchema || {}}
-                  display="list"
-                  onChange={() => {}}
-                >
-                  <span />
-                </JSONSchemaPreviewer>
-              </div>
-            )}
+          {schemas && schemas.schema && (
+            <div style={{ maxHeight: "30vh", overflowX: "hidden" }}>
+              <JSONSchemaPreviewer
+                formData={metadata}
+                schema={transformSchema(schemas.schema)}
+                schemaType={mySchema}
+                uiSchema={schemas.uiSchema || {}}
+                display="list"
+                onChange={() => {}}
+              >
+                <span />
+              </JSONSchemaPreviewer>
+            </div>
+          )}
         </Card>
         <Reviews />
         <Card title="Connected Repositories">

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
@@ -13,34 +13,31 @@ const CodeViewer = ({
 }) => {
   const element = useRef(null);
 
-  useEffect(
-    () => {
-      element.current.innerHTML = "";
+  useEffect(() => {
+    element.current.innerHTML = "";
 
-      let extensions = [
-        basicSetup,
-        EditorState.readOnly.of(isReadOnly),
-        EditorView.theme({
-          "&": {
-            width: "100%",
-            height: "100%",
-          },
-        }),
-      ];
-      if (lang) {
-        extensions.push(lang());
-      }
+    let extensions = [
+      basicSetup,
+      EditorState.readOnly.of(isReadOnly),
+      EditorView.theme({
+        "&": {
+          width: "100%",
+          height: "100%",
+        },
+      }),
+    ];
+    if (lang) {
+      extensions.push(lang());
+    }
 
-      new EditorView({
-        state: EditorState.create({
-          doc: value,
-          extensions: [...extensions, ...extraExtensions],
-        }),
-        parent: element.current,
-      });
-    },
-    [value, schema]
-  );
+    new EditorView({
+      state: EditorState.create({
+        doc: value,
+        extensions: [...extensions, ...extraExtensions],
+      }),
+      parent: element.current,
+    });
+  }, [value, schema]);
 
   return <div style={{ height: height }} ref={element} />;
 };

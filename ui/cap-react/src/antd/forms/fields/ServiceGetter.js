@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Input, Row, Select, Space, Typography } from "antd";
 import axios from "axios";
 import Ror from "./services/Ror";
@@ -33,14 +33,11 @@ const ServiceGetter = ({ formData = {}, uiSchema, onChange }) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  useEffect(
-    () => {
-      if (uiSchema["ui:servicesList"].length === 1) {
-        setService(uiSchema["ui:servicesList"]);
-      }
-    },
-    [uiSchema]
-  );
+  useEffect(() => {
+    if (uiSchema["ui:servicesList"].length === 1) {
+      setService(uiSchema["ui:servicesList"]);
+    }
+  }, [uiSchema]);
 
   const getContentByName = name => {
     const choices = {
@@ -123,6 +120,7 @@ const ServiceGetter = ({ formData = {}, uiSchema, onChange }) => {
               value={service}
               placeHolder="Select service"
               onChange={val => setService(val)}
+              style={{ width: "100%" }}
             >
               {uiSchema["ui:servicesList"].map(service => (
                 <Select.Option value={service} key={service}>

@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { selectProperty } from "../../../actions/schemaWizard";
@@ -29,14 +28,19 @@ import { isItTheArrayField } from "../utils";
 const SchemaTreeItem = ({
   selectProperty,
   path,
-  uiSchema,
+  uiSchema = {},
   schema,
   display,
   updateDisplay,
 }) => {
   // selects the item for the property editor
-  const _onClick = () => {
+  const handleClick = () => {
     selectProperty(path);
+  };
+
+  const handleUpdateDisplay = e => {
+    e.stopPropagation();
+    updateDisplay();
   };
 
   const shouldBoxAcceptChildren = uiSchema => {
@@ -81,9 +85,10 @@ const SchemaTreeItem = ({
           uiSchema["ui:options"] &&
           uiSchema["ui:options"].hidden &&
           0.5,
+        backgroundColor: "white",
       }}
     >
-      <Row gutter={8} onClick={_onClick} align="middle" wrap={false}>
+      <Row gutter={8} onClick={handleClick} align="middle" wrap={false}>
         <Col flex="none">{getIconByType(uiSchema, schema)}</Col>
         <Col flex="auto">
           <Row
@@ -115,24 +120,14 @@ const SchemaTreeItem = ({
           )}
         </Col>
         <Col>
-          {schema ? (
-            <div>
-              {schema.type == "object" && !shouldBoxAcceptChildren(uiSchema) ? (
-                display ? (
-                  <UpOutlined onClick={updateDisplay} />
-                ) : (
-                  <DownOutlined onClick={updateDisplay} />
-                )
-              ) : null}
-              {isItTheArrayField(schema, uiSchema) ? (
-                display ? (
-                  <UpOutlined onClick={updateDisplay} />
-                ) : (
-                  <DownOutlined onClick={updateDisplay} />
-                )
-              ) : null}
-            </div>
-          ) : null}
+          {schema &&
+            ((schema.type == "object" && !shouldBoxAcceptChildren(uiSchema)) ||
+              isItTheArrayField(schema, uiSchema)) &&
+            (display ? (
+              <UpOutlined onClick={handleUpdateDisplay} />
+            ) : (
+              <DownOutlined onClick={handleUpdateDisplay} />
+            ))}
         </Col>
       </Row>
     </Tag>
@@ -158,10 +153,7 @@ function mapDispatchToProps(dispatch) {
     selectProperty: path => dispatch(selectProperty(path)),
   };
 }
-export default connect(
-  state => state,
-  mapDispatchToProps
-)(SchemaTreeItem);
+export default connect(state => state, mapDispatchToProps)(SchemaTreeItem);
 
 let mapType2Icon = {
   object: <div>&#123;&#32;&#125;</div>,

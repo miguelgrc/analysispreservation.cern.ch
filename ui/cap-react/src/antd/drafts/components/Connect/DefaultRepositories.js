@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import {
   Alert,
@@ -29,7 +28,7 @@ const Connect = ({ draftID, repos = [], repoConfig = {}, upload }) => {
           icon={<UploadOutlined />}
           size="small"
           type="primary"
-          onClick={(event) => {
+          onClick={event => {
             // If you don't want click extra trigger collapse, you can prevent this:
             event.stopPropagation();
             createDefaultRepo(key, config);
@@ -66,6 +65,7 @@ const Connect = ({ draftID, repos = [], repoConfig = {}, upload }) => {
           {Object.entries(repositories).map(([key, value]) => (
             <CollapsePanel
               showAfrrow={false}
+              key={key}
               header={
                 <Space align="center">
                   {value.host == "github.com" ? (
@@ -80,7 +80,7 @@ const Connect = ({ draftID, repos = [], repoConfig = {}, upload }) => {
               }
               extra={genExtra(
                 key,
-                repos.filter((r) =>
+                repos.filter(r =>
                   r.host == value.host &&
                   r.name == value.default_name &&
                   r.owner == value.org_name

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Space, Tag, Typography, Descriptions, Card } from "antd";
 import { Link, Route } from "react-router-dom";
@@ -92,37 +92,36 @@ const SideBar = ({
             </Descriptions.Item>
           ))}
         </Descriptions>
-        <FileManager visible={showModal} onCancel={() => setShowModal(false)} />
+        <FileManager open={showModal} onCancel={() => setShowModal(false)} />
         <Card
           size="small"
           title="Files | Data | Repos"
           extra={[
-            status != "published" &&
-              canEdit(canAdmin, canUpdate) && (
-                <Route
-                  path={DRAFT_ITEM}
-                  render={() => (
-                    <Space direction="horizontal" size="middle">
-                      <Button
-                        size="small"
-                        key="refresh"
-                        icon={<ReloadOutlined />}
-                        onClick={() => {
-                          let { bucket } = links;
-                          let bucket_id = bucket.split("/").pop();
-                          getBucketById(bucket_id);
-                        }}
-                      />
-                      <Button
-                        key="add"
-                        size="small"
-                        icon={<PlusOutlined />}
-                        onClick={() => setShowModal(true)}
-                      />
-                    </Space>
-                  )}
-                />
-              ),
+            status != "published" && canEdit(canAdmin, canUpdate) && (
+              <Route
+                path={DRAFT_ITEM}
+                render={() => (
+                  <Space direction="horizontal" size="middle">
+                    <Button
+                      size="small"
+                      key="refresh"
+                      icon={<ReloadOutlined />}
+                      onClick={() => {
+                        let { bucket } = links;
+                        let bucket_id = bucket.split("/").pop();
+                        getBucketById(bucket_id);
+                      }}
+                    />
+                    <Button
+                      key="add"
+                      size="small"
+                      icon={<PlusOutlined />}
+                      onClick={() => setShowModal(true)}
+                    />
+                  </Space>
+                )}
+              />
+            ),
           ]}
         >
           <DepositFilesList files={files} />

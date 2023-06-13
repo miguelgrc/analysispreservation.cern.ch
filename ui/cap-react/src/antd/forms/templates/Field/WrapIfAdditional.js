@@ -1,16 +1,13 @@
-import React from "react";
-
-import { utils } from "@rjsf/core";
+import { ADDITIONAL_PROPERTY_FLAG } from "@rjsf/utils";
 import { Button, Col, Form, Input, Row } from "antd";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import PropTypes from "prop-types";
-const { ADDITIONAL_PROPERTY_FLAG } = utils;
 
 const VERTICAL_LABEL_COL = { span: 24 };
 const VERTICAL_WRAPPER_COL = { span: 24 };
 
 const INPUT_STYLE = {
-  width: "100%"
+  width: "100%",
 };
 
 const WrapIfAdditional = ({
@@ -25,7 +22,7 @@ const WrapIfAdditional = ({
   readonly,
   required,
   schema,
-  isTabView
+  isTabView,
 }) => {
   const {
     colon,
@@ -34,11 +31,11 @@ const WrapIfAdditional = ({
     rowGutter = 24,
     toolbarAlign = "top",
     wrapperCol = VERTICAL_WRAPPER_COL,
-    wrapperStyle
+    wrapperStyle,
   } = formContext;
 
   const keyLabel = `${label} Key`; // i18n ?
-  const additional = schema.hasOwnProperty(ADDITIONAL_PROPERTY_FLAG);
+  const additional = Object.hasOwn(schema, ADDITIONAL_PROPERTY_FLAG);
 
   if (!additional) {
     return (
@@ -113,7 +110,7 @@ WrapIfAdditional.propTypes = {
   schema: PropTypes.object,
   label: PropTypes.string,
   id: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default WrapIfAdditional;

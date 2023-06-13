@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, Modal } from "antd";
 import { connect } from "react-redux";
@@ -8,20 +8,20 @@ import cleanDeep from "clean-deep";
 
 import CreateForm from "../CreateForm";
 
-const DraftCreate = ({ onCancel, visible, formData, metadata, history }) => {
+const DraftCreate = ({ onCancel, open, formData, metadata, history }) => {
   const [form, setForm] = useState(null);
 
   return (
     <Modal
       onCancel={onCancel}
-      visible={visible}
+      open={open}
       title="Create Analysis"
       okText="Start Preserving"
       destroyOnClose
       okButtonProps={{
         onClick: () => {
           form.submit();
-        }
+        },
       }}
     >
       {history.location.pathname.startsWith("/drafts/") &&
@@ -39,22 +39,17 @@ const DraftCreate = ({ onCancel, visible, formData, metadata, history }) => {
 };
 
 DraftCreate.propTypes = {
-  visible: PropTypes.bool,
+  open: PropTypes.bool,
   onCancel: PropTypes.func,
   createDraft: PropTypes.func,
   formData: PropTypes.object,
   metadata: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   formData: state.draftItem.get("formData"),
-  metadata: state.draftItem.get("metadata")
+  metadata: state.draftItem.get("metadata"),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(DraftCreate)
-);
+export default withRouter(connect(mapStateToProps, null)(DraftCreate));

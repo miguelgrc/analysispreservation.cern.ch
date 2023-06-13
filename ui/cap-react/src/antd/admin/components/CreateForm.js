@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Input } from "antd";
 
@@ -17,7 +16,7 @@ const CreateForm = ({ createContentType }) => {
         label="Description"
         name="description"
         rules={[
-          { required: true, message: "Please input schema description!" }
+          { required: true, message: "Please input schema description!" },
         ]}
       >
         <Input.TextArea data-cy="admin-form-description" />
@@ -33,7 +32,7 @@ const CreateForm = ({ createContentType }) => {
 };
 
 CreateForm.propTypes = {
-  createContentType: PropTypes.func
+  createContentType: PropTypes.func,
 };
 
 export default CreateForm;

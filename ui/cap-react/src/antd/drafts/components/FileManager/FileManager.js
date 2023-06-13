@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -8,47 +8,38 @@ import {
   Row,
   Space,
   Typography,
-  Upload
+  Upload,
 } from "antd";
 import {
   CheckCircleTwoTone,
   InboxOutlined,
   MinusCircleOutlined,
-  PlusOutlined
+  PlusOutlined,
 } from "@ant-design/icons";
 import { _getIcon } from "../../../partials/FileList/utils/getFileItemIcon";
 import prettyBytes from "pretty-bytes";
-const FileManager = ({
-  visible,
-  onCancel,
-  links,
-  uploadFile,
-  filesToUpload
-}) => {
+const FileManager = ({ open, onCancel, links, uploadFile, filesToUpload }) => {
   const [fileList, setFileList] = useState([]);
   const [status, setStatus] = useState("ready");
-  useEffect(
-    () => {
-      const currentName = form.getFieldsValue().directory
-        ? form.getFieldsValue().directory + "/" + form.getFieldsValue().filename
-        : form.getFieldsValue().filename;
+  useEffect(() => {
+    const currentName = form.getFieldsValue().directory
+      ? form.getFieldsValue().directory + "/" + form.getFieldsValue().filename
+      : form.getFieldsValue().filename;
 
-      if (fileList.length > 0 && filesToUpload.has(currentName)) {
-        setStatus(filesToUpload.get(currentName).status);
-        if (filesToUpload.get(currentName).status == "done")
-          setTimeout(() => {
-            setFileList([]);
-            setStatus("ready");
-          }, 1000);
-      }
-    },
-    [filesToUpload]
-  );
+    if (fileList.length > 0 && filesToUpload.has(currentName)) {
+      setStatus(filesToUpload.get(currentName).status);
+      if (filesToUpload.get(currentName).status == "done")
+        setTimeout(() => {
+          setFileList([]);
+          setStatus("ready");
+        }, 1000);
+    }
+  }, [filesToUpload]);
   const [form] = Form.useForm();
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={() => {
         onCancel();
         setFileList([]);
@@ -63,8 +54,8 @@ const FileManager = ({
             fileList[0], // Send only first file from the list
             form.getFieldsValue().directory
               ? form.getFieldsValue().directory +
-                "/" +
-                form.getFieldsValue().filename
+                  "/" +
+                  form.getFieldsValue().filename
               : form.getFieldsValue().filename,
             form
               .getFieldsValue()
@@ -72,7 +63,7 @@ const FileManager = ({
                 (acc, item) => acc + item.key + "=" + item.value + ";",
                 ""
               )
-          )
+          ),
       }}
     >
       <Upload.Dragger
@@ -83,7 +74,7 @@ const FileManager = ({
           form.setFieldsValue({
             filename: file.name,
             directory: "",
-            file_tags: []
+            file_tags: [],
           });
         }}
         itemRender={(_, file) =>
@@ -99,7 +90,7 @@ const FileManager = ({
                   padding: "10px",
                   border: "2px dashed steelblue",
                   margin: "10px 0",
-                  opacity: status == "uploading" && 0.5
+                  opacity: status == "uploading" && 0.5,
                 }}
               >
                 <Row justify="space-between">
@@ -118,7 +109,7 @@ const FileManager = ({
                     </Form.Item>
                     <Form.List name="file_tags">
                       {(fields, { add, remove }) => (
-                        <React.Fragment>
+                        <>
                           {fields.map(field => (
                             <Space
                               key={[field.fieldKey, "file_tags"]}
@@ -153,7 +144,7 @@ const FileManager = ({
                               Add Tag
                             </Button>
                           </Form.Item>
-                        </React.Fragment>
+                        </>
                       )}
                     </Form.List>
                   </Form>
@@ -176,11 +167,11 @@ const FileManager = ({
 };
 
 FileManager.propTypes = {
-  visible: PropTypes.bool,
+  open: PropTypes.bool,
   onCancel: PropTypes.func,
   links: PropTypes.object,
   uploadFile: PropTypes.func,
-  filesToUpload: PropTypes.object
+  filesToUpload: PropTypes.object,
 };
 
 export default FileManager;

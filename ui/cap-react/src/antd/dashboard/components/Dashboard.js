@@ -15,7 +15,7 @@ import {
   Button,
 } from "antd";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const MAX_DISPLAYED_COLLECTIONS = 20;
@@ -27,6 +27,8 @@ const Dashboard = ({ fetchDashboard, results, loading, groups }) => {
     fetchDashboard();
   }, []);
   let lists = _getList(results);
+
+  const statisticValueStyle = { textAlign: "center" };
 
   const generateCollectionTags = groups =>
     groups.map(e => (
@@ -43,7 +45,7 @@ const Dashboard = ({ fetchDashboard, results, loading, groups }) => {
       {showModal && (
         <Modal
           title="Your Collections"
-          visible={showModal}
+          open={showModal}
           onCancel={() => setShowModal(false)}
           footer={null}
         >
@@ -55,44 +57,53 @@ const Dashboard = ({ fetchDashboard, results, loading, groups }) => {
       <Col
         xs={{ span: 24, order: 2 }}
         md={{ span: 12, order: 1 }}
-        className="padding10"
+        style={{ padding: "10px" }}
       >
         <DashboardList
           loading={loading}
           listType="draft"
           list={lists["drafts"]}
           header="Draft Documents"
-          emptyMessage="Draft analyses that your collaborators have given you read/write access to."
+          description="Draft analyses that your collaborators have given you read/write access to."
+          displayShowAll
         />
       </Col>
       <Col
         xs={{ span: 24, order: 1 }}
         md={{ span: 12, order: 2 }}
-        className="padding10"
+        style={{ padding: "10px" }}
       >
-        <Card>
+        <Card style={{ paddingBottom: "10px" }}>
           <Row justify="space-around" align="middle">
             <Statistic
               value={results.user_drafts_count}
               title="Drafts"
               loading={loading}
+              valueStyle={statisticValueStyle}
             />
             <Divider type="vertical" />
             <Statistic
               value={results.user_published_count}
               title="Published"
               loading={loading}
+              valueStyle={statisticValueStyle}
             />
             <Divider type="vertical" />
             <Statistic
               value={results.user_count}
               title="Total"
               loading={loading}
+              valueStyle={statisticValueStyle}
             />
           </Row>
         </Card>
 
-        <Card title="Quick Search" style={{ textAlign: "center" }}>
+        <Card
+          title={<Typography.Text strong>Quick Search</Typography.Text>}
+          size="small"
+          headStyle={{ height: "46px", textAlign: "center" }}
+          style={{ marginTop: "20px" }}
+        >
           <DashboardQuickSearch />
         </Card>
 
@@ -119,22 +130,31 @@ const Dashboard = ({ fetchDashboard, results, loading, groups }) => {
           </Space>
         </Card>
       </Col>
-      <Col xs={{ span: 24, order: 3 }} md={{ span: 12 }} className="padding10">
+      <Col
+        xs={{ span: 24, order: 3 }}
+        md={{ span: 12 }}
+        style={{ padding: "10px" }}
+      >
         <DashboardList
           loading={loading}
           listType="published"
           list={lists["published"]}
-          header="Published (in CAP) Documents"
-          emptyMessage="All analyses published on CAP by members of your collaboration."
+          header="Published Documents in CAP"
+          description="All analyses published on CAP by members of your collaboration."
+          displayShowAll
         />
       </Col>
-      <Col xs={{ span: 24, order: 4 }} md={{ span: 12 }} className="padding10">
+      <Col
+        xs={{ span: 24, order: 4 }}
+        md={{ span: 12 }}
+        style={{ padding: "10px" }}
+      >
         <DashboardList
           loading={loading}
           listType="workflows"
           list={lists["workflows"]}
           header="Workflows"
-          emptyMessage="Recent workflows attached to your content"
+          description="Recent workflows attached to your content."
         />
       </Col>
     </Row>

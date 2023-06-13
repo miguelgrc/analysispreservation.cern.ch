@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Space, Form, Input, Radio } from "antd";
 const BLOCK_DEPOSIT_GROUPS = ["cms-analysis"];
@@ -8,7 +8,7 @@ const CreateForm = ({
   onCancel,
   createDraft,
   anatype = "",
-  disabled = false
+  disabled = false,
 }) => {
   const [form] = Form.useForm();
 
@@ -44,7 +44,7 @@ const CreateForm = ({
           label="General Title"
           name="generalTitle"
           rules={[
-            { required: true, message: "Title is mandatory for your analysis" }
+            { required: true, message: "Title is mandatory for your analysis" },
           ]}
         >
           <Input
@@ -57,7 +57,7 @@ const CreateForm = ({
           name="type"
           label="Type"
           rules={[
-            { required: true, message: "Type is mandatory for your analysis" }
+            { required: true, message: "Type is mandatory for your analysis" },
           ]}
         >
           <Radio.Group size="large" buttonStyle="solid" data-cy="anatype">
@@ -85,7 +85,7 @@ CreateForm.propTypes = {
   onCancel: PropTypes.func,
   contentTypes: PropTypes.object,
   anatype: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 export default CreateForm;

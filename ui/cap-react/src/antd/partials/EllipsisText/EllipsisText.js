@@ -1,4 +1,3 @@
-import React from "react";
 import { Tooltip } from "antd";
 import PropTypes from "prop-types";
 
@@ -42,7 +41,7 @@ EllipsisText.propTypes = {
   length: PropTypes.number,
   middle: PropTypes.bool,
   tooltip: PropTypes.bool,
-  suffixCount: PropTypes.number
+  suffixCount: PropTypes.number,
 };
 
 export default EllipsisText;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal, Row, Space, Typography } from "antd";
 import { connect } from "react-redux";
@@ -13,17 +13,15 @@ const CapFiles = ({ uiSchema, files, onChange, formData }) => {
 
   //TODO: we should investigate whether the onChange should also accept directories
   return (
-    <React.Fragment>
+    <>
       <Modal
-        visible={showModal}
+        open={showModal}
         onCancel={() => setShowModal(false)}
         title="File Manager"
         width={800}
         footer={null}
       >
-        <Typography.Title level={5}>
-          Select a file from the list
-        </Typography.Title>
+        <Typography.Text strong>Select a file from the list</Typography.Text>
         <Files
           memoFiles={files}
           onFileClick={name => {
@@ -69,7 +67,7 @@ const CapFiles = ({ uiSchema, files, onChange, formData }) => {
             "Select a file or a repository from your list to link here"}
         </Button>
       )}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -89,7 +87,4 @@ const mapDispatchToProps = dispatch => ({
   selectPath: (path, type) => dispatch(selectPath(path, type)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CapFiles);
+export default connect(mapStateToProps, mapDispatchToProps)(CapFiles);

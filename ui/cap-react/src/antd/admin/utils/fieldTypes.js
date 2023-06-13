@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   AimOutlined,
   AppstoreOutlined,
@@ -27,14 +25,12 @@ const common = {
     title: {
       type: "string",
       title: "Title",
-      description:
-        "Provide the title that you want to be displayed for your field",
+      description: "Provide a title to be displayed for your field",
     },
     description: {
       title: "Description",
       type: "string",
-      description:
-        "Provide the description that you want to be displayed for your field",
+      description: "Provide a description to be displayed for your field",
     },
   },
   optionsUiSchema: {
@@ -289,7 +285,8 @@ const simple = {
             mask: {
               type: "string",
               title: "Input mask",
-              description: "Add a mask to visualize and limit the format of the input. Use the following format: `0` (number), `a` (lowercase letter), `A` (uppercase letter), `*` (letter or number). You can escape all these with `\\`. The rest of the characters will be treated as constants"
+              description:
+                "Add a mask to visualize and limit the format of the input. Use the following format: `0` (number), `a` (lowercase letter), `A` (uppercase letter), `*` (letter or number). You can escape all these with `\\`. The rest of the characters will be treated as constants",
             },
           },
         },
@@ -343,19 +340,17 @@ const simple = {
             ...common.optionsUiSchema.properties["ui:options"].properties,
             rows: {
               title: "Rows",
-              description: "The number of the textarea rows",
+              description: "The number of rows in the textarea",
               type: "number",
             },
             maxLength: {
               title: "Max Length",
-              description:
-                "Provide a number as the maximum limit of characters, infinity if not provided",
+              description: "Infinity if not provided",
               type: "number",
             },
             minLength: {
               title: "Min Length",
-              description:
-                "Provide a number as the minimum limit of charactes, empty if not provded",
+              description: "Empty if not provided",
               type: "number",
             },
             placeholder: {
@@ -392,8 +387,10 @@ const simple = {
         type: {
           title: "Type of the number",
           type: "string",
-          enum: ["integer", "number"],
-          enumNames: ["Integer", "Float"],
+          oneOf: [
+            { const: "integer", title: "Integer" },
+            { const: "number", title: "Float" },
+          ],
         },
         readOnly: extra.optionsSchema.readOnly,
       },
@@ -426,9 +423,11 @@ const simple = {
         ...common.optionsSchema,
         type: {
           title: "Type",
-          enum: ["boolean", "array"],
-          enumNames: ["One Option", "Multiple Options"],
           type: "string",
+          oneOf: [
+            { const: "boolean", title: "One Option" },
+            { const: "array", title: "Multiple Options" },
+          ],
         },
         readOnly: extra.optionsSchema.readOnly,
       },
@@ -515,8 +514,11 @@ const simple = {
           type: "string",
           title: "The type of the returned value",
           description: "Define the type of the returned value",
-          enum: ["boolean", "string", "number"],
-          enumNames: ["Boolean", "String", "Number"],
+          oneOf: [
+            { const: "boolean", title: "Boolean" },
+            { const: "string", title: "String" },
+            { const: "number", title: "Number" },
+          ],
         },
         readOnly: extra.optionsSchema.readOnly,
       },
@@ -609,11 +611,10 @@ const simple = {
         type: {
           title: "Type",
           type: "string",
-          enum: ["string", "number", "array"],
-          enumNames: [
-            "Select one value (text)",
-            "Select one value (number)",
-            "Select multiple values",
+          oneOf: [
+            { const: "string", title: "Select one value (text)" },
+            { const: "number", title: "Select one value (number)" },
+            { const: "array", title: "Select multiple values" },
           ],
         },
         readOnly: extra.optionsSchema.readOnly,
@@ -709,10 +710,42 @@ const simple = {
       title: "Date Schema",
       properties: {
         ...common.optionsSchema,
+        format: {
+          type: "string",
+          title: "Type",
+          enum: ["date", "date-time"],
+          default: "date",
+        },
+        customFormat: {
+          type: "string",
+          title: "Format",
+          description:
+            "Define the date format ([help](https://day.js.org/docs/en/display/format#list-of-all-available-formats)). Remember to include the time in the format if you have selected `date-time` as type",
+        },
+        minDate: {
+          type: "string",
+          title: "Minimum date allowed",
+        },
+        maxDate: {
+          type: "string",
+          title: "Maximum date allowed",
+        },
         readOnly: extra.optionsSchema.readOnly,
       },
     },
     optionsSchemaUiSchema: {
+      customFormat: {
+        "ui:placeholder": "DD/MM/YYYY",
+        "ui:options": {
+          descriptionIsMarkdown: true,
+        },
+      },
+      minDate: {
+        "ui:widget": "date",
+      },
+      maxDate: {
+        "ui:widget": "date",
+      },
       readOnly: extra.optionsSchemaUiSchema.readOnly,
     },
     optionsUiSchema: {
@@ -829,8 +862,11 @@ const advanced = {
           type: "array",
           items: {
             type: "string",
-            enum: ["orcid", "ror", "zenodo"],
-            enumNames: ["ORCiD", "ROR", "Zenodo"],
+            oneOf: [
+              { const: "orcid", title: "ORCiD" },
+              { const: "ror", title: "ROR" },
+              { const: "zenodo", title: "Zenodo" },
+            ],
           },
           uniqueItems: "true",
         },
@@ -866,7 +902,7 @@ const advanced = {
         tagPattern: {
           type: "string",
           title: "Pattern",
-          description: "Provide a regex expression for your pattern",
+          description: "Provide a regex for your pattern",
         },
         tagPatternErrorMessage: {
           type: "string",
@@ -944,8 +980,10 @@ export const hiddenFields = {
         type: {
           title: "Type of the number",
           type: "string",
-          enum: ["integer", "number"],
-          enumNames: ["Integer", "Float"],
+          oneOf: [
+            { const: "integer", title: "Integer" },
+            { const: "number", title: "Float" },
+          ],
         },
         readOnly: extra.optionsSchema.readOnly,
       },

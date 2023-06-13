@@ -1,12 +1,10 @@
-import React from "react";
 import PropTypes from "prop-types";
-import CAPLogoLight from "../../../img/cap-logo-light.svg";
+import { ReactComponent as CAPLogoLight } from "../../../img/cap-logo-light.svg";
 import { Row, Col } from "antd";
 
 import { Link } from "react-router-dom";
 import LoggedInMenu from "./LoggedInMenu";
 import SimpleMenu from "./Menu";
-import "./Header.less";
 
 import AntSearchBar from "../SearchBar";
 
@@ -22,7 +20,7 @@ const Header = ({ logout, permissions, isLoggedIn }) => {
         </Link>
       </Col>
       {isLoggedIn ? (
-        <React.Fragment>
+        <>
           <Col
             xs={{ span: 24, order: 3 }}
             md={{ span: 15, order: 2 }}
@@ -41,7 +39,7 @@ const Header = ({ logout, permissions, isLoggedIn }) => {
           >
             <LoggedInMenu logout={logout} permissions={permissions} />
           </Col>
-        </React.Fragment>
+        </>
       ) : (
         <Col
           xs={{ order: 2, span: 12 }}
@@ -58,7 +56,7 @@ const Header = ({ logout, permissions, isLoggedIn }) => {
 Header.propTypes = {
   logout: PropTypes.func,
   permissions: PropTypes.object,
-  isLoggedIn: PropTypes.bool
+  isLoggedIn: PropTypes.bool,
 };
 
 export default Header;

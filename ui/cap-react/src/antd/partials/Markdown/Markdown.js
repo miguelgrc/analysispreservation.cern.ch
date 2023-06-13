@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { markedInput, sanitizedInput } from "./marked";
 
@@ -6,7 +5,7 @@ const Markdown = ({ renderAsHtml, text }) => {
   return renderAsHtml ? (
     <span
       dangerouslySetInnerHTML={{
-        __html: renderAsHtml && sanitizedInput(markedInput(text))
+        __html: renderAsHtml && sanitizedInput(markedInput(text)),
       }}
     />
   ) : (
@@ -16,7 +15,7 @@ const Markdown = ({ renderAsHtml, text }) => {
 
 Markdown.propTypes = {
   renderAsHtml: PropTypes.bool,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 
 export default Markdown;

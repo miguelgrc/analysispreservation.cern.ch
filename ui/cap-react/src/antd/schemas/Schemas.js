@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DocumentTitle from "../partials/DocumentTitle";
 import {
   Row,
@@ -149,9 +149,9 @@ const Schemas = ({ match }) => {
         <ErrorScreen />
       ) : (
         schema && (
-          <React.Fragment>
+          <>
             <Modal
-              visible={showModal}
+              open={showModal}
               onCancel={() => setShowModal(false)}
               title={`${selection} diff`}
               width={1000}
@@ -163,10 +163,13 @@ const Schemas = ({ match }) => {
               }}
             >
               <CodeDiffViewer
-                left={JSON.stringify(selection === FULL_SCHEMA
-                  ? originalSchema
-                  : originalSchema[selection], null, 2)
-                }
+                left={JSON.stringify(
+                  selection === FULL_SCHEMA
+                    ? originalSchema
+                    : originalSchema[selection],
+                  null,
+                  2
+                )}
                 right={JSON.stringify(field, null, 2)}
               />
             </Modal>
@@ -213,8 +216,8 @@ const Schemas = ({ match }) => {
                         jsonError
                           ? "Please fix the syntax errors to be able to view the diff"
                           : selection === FULL_SCHEMA
-                            ? "View the full diff"
-                            : "View field diff"
+                          ? "View the full diff"
+                          : "View field diff"
                       }
                     >
                       <Button
@@ -243,10 +246,10 @@ const Schemas = ({ match }) => {
                         jsonError
                           ? "Please fix the syntax errors to be able to save changes"
                           : selection === FULL_SCHEMA
-                            ? "Save all changes"
-                            : !EDITABLE_FIELDS.includes(selection)
-                              ? "Please select an editable field to be able to edit and save the changes"
-                              : "Save changes to this field"
+                          ? "Save all changes"
+                          : !EDITABLE_FIELDS.includes(selection)
+                          ? "Please select an editable field to be able to edit and save the changes"
+                          : "Save changes to this field"
                       }
                     >
                       <Button
@@ -281,7 +284,7 @@ const Schemas = ({ match }) => {
                 </Row>
               </Col>
             </Row>
-          </React.Fragment>
+          </>
         )
       )}
     </DocumentTitle>

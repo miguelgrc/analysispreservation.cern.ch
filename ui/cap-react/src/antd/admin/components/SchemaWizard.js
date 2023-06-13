@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import HTML5Backend from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
@@ -12,7 +11,7 @@ const SchemaWizard = ({ field, loader }) => {
   if (loader)
     return (
       <Row style={{ height: "100%" }} align="middle" justify="center">
-        <Spin size="large" />;
+        <Spin size="large" />
       </Row>
     );
   return (

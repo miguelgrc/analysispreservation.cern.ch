@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 
 import Button from "antd/lib/button";
-import { Row, Col, Modal, Space, Tag, Checkbox, Table } from "antd";
-import { withConfigConsumer } from "antd/lib/config-provider/context";
+import { Row, Col, Modal, Space, Tag, Checkbox, Table, theme } from "antd";
 import PlusCircleOutlined from "@ant-design/icons/PlusCircleOutlined";
 
 import ArrayFieldTemplateItem from "./ArrayFieldTemplateItem";
@@ -13,8 +12,7 @@ import AccordionArrayFieldTemplate from "./AccordionArrayFieldTemplate";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ImportListModal from "./ImportListModal";
-import CopyToClipboard from "react-copy-to-clipboard";
-import { CheckOutlined } from "@ant-design/icons";
+import { CheckOutlined, CopyOutlined } from "@ant-design/icons";
 import CodeViewer from "../../../utils/CodeViewer";
 import { stex } from "@codemirror/legacy-modes/mode/stex";
 import {
@@ -23,6 +21,7 @@ import {
   StreamLanguage,
 } from "@codemirror/language";
 import FieldHeader from "../Field/FieldHeader";
+import TitleField from "../../fields/internal/TitleField";
 
 const NormalArrayFieldTemplate = ({
   canAdd,
@@ -38,11 +37,12 @@ const NormalArrayFieldTemplate = ({
   required,
   schema,
   title,
-  TitleField,
   uiSchema,
   formData,
 }) => {
+  const { useToken } = theme;
   const { labelAlign = "right", rowGutter = 24 } = formContext;
+
   const [latexData, setLatexData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [emailModal, setEmailModal] = useState(false);
@@ -58,6 +58,8 @@ const NormalArrayFieldTemplate = ({
     labelClsBasic,
     labelAlign === "left" && `${labelClsBasic}-left`
   );
+  const { token } = useToken();
+
   let uiImport = null;
   let uiLatex = null;
   let uiEmail = null;
@@ -163,7 +165,7 @@ const NormalArrayFieldTemplate = ({
       {uiLatex && (
         <Modal
           destroyOnClose
-          visible={showModal}
+          open={showModal}
           onCancel={() => {
             setShowModal(false);
             setLatexData(null);
@@ -179,14 +181,16 @@ const NormalArrayFieldTemplate = ({
                 >
                   Close
                 </Button>
-                <CopyToClipboard
-                  text={decodeURI(latexData)}
-                  onCopy={() => !copy && setCopy(true)}
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    navigator.clipboard.writeText(decodeURI(latexData));
+                    setCopy(true);
+                  }}
+                  icon={copy ? <CheckOutlined /> : <CopyOutlined />}
                 >
-                  <Button type="primary" icon={copy && <CheckOutlined />}>
-                    {copy ? "Copied" : "Copy to clipboard"}
-                  </Button>
-                </CopyToClipboard>
+                  {copy ? "Copied" : "Copy to clipboard"}
+                </Button>
               </Space>
             </Row>
           }
@@ -203,7 +207,7 @@ const NormalArrayFieldTemplate = ({
       )}
       {uiImport && (
         <ImportListModal
-          visible={importModal}
+          open={importModal}
           uiImport={uiImport}
           schema={schema}
           formData={formData}
@@ -214,7 +218,7 @@ const NormalArrayFieldTemplate = ({
       )}
       {uiEmail && formData && (
         <Modal
-          visible={emailModal}
+          open={emailModal}
           onCancel={() => setEmailModal(false)}
           title="Select user & egroups emails to send"
           okText="Send Email"
@@ -238,7 +242,7 @@ const NormalArrayFieldTemplate = ({
                 Default email recepients:{" "}
                 <Space>
                   {uiEmailDefaults.map(i => (
-                    <Tag>{i}</Tag>
+                    <Tag key={i}>{i}</Tag>
                   ))}
                 </Space>
               </Col>
@@ -279,29 +283,35 @@ const NormalArrayFieldTemplate = ({
         </Modal>
       )}
       <Row gutter={rowGutter}>
-        {title && (
-          <Col className={labelColClassName} span={24} style={{ padding: "0" }}>
-            <TitleField
-              id={`${idSchema.$id}__title`}
-              key={`array-field-title-${idSchema.$id}`}
-              required={required}
-              title={uiSchema["ui:title"] || title}
-              uiImport={uiImport}
-              uiLatex={uiLatex}
-              uiEmail={uiEmail}
-              readonly={readonly}
-              enableLatex={() => _enableLatex()}
-              enableImport={() => setImportModal(true)}
-              enableEmail={() => setEmailModal(true)}
-            />
-          </Col>
-        )}
-        <FieldHeader
-          description={uiSchema["ui:description"] || schema.description}
-          uiSchema={uiSchema}
-          key={`array-field-header-${idSchema.$id}`}
-          idSchema={idSchema}
-        />
+        <div style={{ marginBottom: "8px" }}>
+          {title && (
+            <Col
+              className={labelColClassName}
+              span={24}
+              style={{ padding: "0" }}
+            >
+              <TitleField
+                id={`${idSchema.$id}__title`}
+                key={`array-field-title-${idSchema.$id}`}
+                required={required}
+                title={uiSchema["ui:title"] || title}
+                uiImport={uiImport}
+                uiLatex={uiLatex}
+                uiEmail={uiEmail}
+                readonly={readonly}
+                enableLatex={() => _enableLatex()}
+                enableImport={() => setImportModal(true)}
+                enableEmail={() => setEmailModal(true)}
+              />
+            </Col>
+          )}
+          <FieldHeader
+            description={uiSchema["ui:description"] || schema.description}
+            uiSchema={uiSchema}
+            key={`array-field-header-${idSchema.$id}`}
+            idSchema={idSchema}
+          />
+        </div>
         <Col span={24} style={{ marginTop: "5px" }} className="nestedObject">
           <Row>
             {items && (
@@ -330,6 +340,14 @@ const NormalArrayFieldTemplate = ({
                   disabled={disabled || readonly}
                   onClick={onAddClick}
                   type="primary"
+                  // This is needed since for some reason this particular button doesn't use the root
+                  // styles (it has a different CSS hash className). This is the only solution that worked.
+                  // FIXME: Check eventually if this can be fixed with a new @rjsf/antd or antd version.
+                  style={{
+                    borderRadius: token.borderRadius,
+                    backgroundColor: token.colorPrimary,
+                    fontFamily: token.fontFamily,
+                  }}
                 >
                   <PlusCircleOutlined /> Add{" "}
                   {options && options.addLabel ? options.addLabel : `Item`}
@@ -356,11 +374,8 @@ NormalArrayFieldTemplate.propTypes = {
   required: PropTypes.bool,
   schema: PropTypes.object,
   title: PropTypes.string,
-  TitleField: PropTypes.node,
   uiSchema: PropTypes.object,
   formData: PropTypes.object,
 };
 
-export default withConfigConsumer({ prefixCls: "form" })(
-  NormalArrayFieldTemplate
-);
+export default NormalArrayFieldTemplate;

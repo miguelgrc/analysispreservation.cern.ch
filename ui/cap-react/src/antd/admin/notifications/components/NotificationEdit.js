@@ -1,6 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { Button, Col, PageHeader, Popconfirm, Row } from "antd";
+import { Button, Col, Popconfirm, Row } from "antd";
+import { PageHeader } from "@ant-design/pro-layout";
 import Form from "../../../forms/Form";
 import { schema, uiSchema } from "../utils";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -15,13 +15,10 @@ const NotificationEdit = ({
   const formData =
     schemaConfig &&
     schemaConfig.get(category).get(index) &&
-    schemaConfig
-      .get(category)
-      .get(index)
-      .toJS();
+    schemaConfig.get(category).get(index).toJS();
 
   return (
-    <React.Fragment>
+    <>
       <PageHeader
         title={`Notification #${index + 1}`}
         onBack={onBack}
@@ -55,7 +52,7 @@ const NotificationEdit = ({
           />
         </Col>
       </Row>
-    </React.Fragment>
+    </>
   );
 };
 

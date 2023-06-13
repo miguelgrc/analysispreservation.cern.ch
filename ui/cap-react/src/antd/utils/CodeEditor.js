@@ -1,4 +1,3 @@
-import React from "react";
 import { EditorView, keymap } from "@codemirror/view";
 import { linter, lintGutter } from "@codemirror/lint";
 import { indentWithTab } from "@codemirror/commands";
@@ -17,7 +16,7 @@ const CodeEditor = ({
     keymap.of([indentWithTab]),
     linter(lint()),
     lintGutter(),
-    EditorView.updateListener.of((update) => {
+    EditorView.updateListener.of(update => {
       if (update.docChanged) {
         handleEdit(update.state.doc.toString());
       }

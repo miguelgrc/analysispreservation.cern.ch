@@ -1,24 +1,16 @@
-import JSONSchemaPreviewer from "../../partials/JSONSchemaPreviewer";
-import Reviews from "../../partials/Reviews";
+import { useState } from "react";
 import { transformSchema } from "../../partials/Utils/schema";
-import { COLLECTION_BASE } from "../../routes";
+import PropTypes from "prop-types";
+import { Space, Tag, Button, Row, Col, Radio, Grid, Layout } from "antd";
+import { PageHeader } from "@ant-design/pro-layout";
+import { EditOutlined } from "@ant-design/icons";
+import JSONSchemaPreviewer from "../../partials/JSONSchemaPreviewer";
+
 import { shouldDisplayTabButton } from "../utils";
 import SideBar from "./SideBar";
-import { EditOutlined } from "@ant-design/icons";
-import {
-  PageHeader,
-  Space,
-  Tag,
-  Button,
-  Row,
-  Col,
-  Radio,
-  Grid,
-  Layout,
-} from "antd";
-import PropTypes from "prop-types";
-import React, { useState } from "react";
+import Reviews from "../../partials/Reviews";
 import { Link } from "react-router-dom";
+import { COLLECTION_BASE } from "../../routes";
 
 const Preview = ({
   history,
@@ -52,7 +44,7 @@ const Preview = ({
               <Tag>{id}</Tag>
               {schemaType && (
                 <Link
-                  to={`/${COLLECTION_BASE}/${schemaType.name}/${
+                  to={`${COLLECTION_BASE}/${schemaType.name}/${
                     schemaType.version || ""
                   }`}
                 >

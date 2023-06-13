@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Checkbox } from "antd";
 
 const CheckboxWidget = ({
@@ -58,8 +56,8 @@ const CheckboxWidget = ({
   } else {
     return (
       <Checkbox.Group
-        options={options.enumOptions.map(
-          option => (!option.value ? { ...option, value: "null" } : option)
+        options={options.enumOptions.map(option =>
+          !option.value ? { ...option, value: "null" } : option
         )}
         autoFocus={autofocus}
         value={value || []}

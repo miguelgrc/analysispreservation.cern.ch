@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import { Space } from "antd";
@@ -7,16 +7,13 @@ import Files from "./Files";
 
 const FileList = ({
   files,
-  renderList = ["files", "repositories", "title"]
+  renderList = ["files", "repositories", "title"],
 }) => {
   const [fileToDisplay, setFileToDisplay] = useState(null);
 
-  const memoFiles = useMemo(
-    () => {
-      return files;
-    },
-    [files]
-  );
+  const memoFiles = useMemo(() => {
+    return files;
+  }, [files]);
   const myRenderList = useMemo(() => renderList, []);
   const onClickModal = useCallback(
     file => {
@@ -26,9 +23,9 @@ const FileList = ({
   );
 
   return (
-    <React.Fragment>
+    <>
       <FileModal
-        visible={fileToDisplay}
+        open={fileToDisplay}
         onCancel={() => setFileToDisplay(false)}
         file={fileToDisplay}
       />
@@ -39,13 +36,13 @@ const FileList = ({
           moodaUpate={onClickModal}
         />
       </Space>
-    </React.Fragment>
+    </>
   );
 };
 
 FileList.propTypes = {
   renderList: PropTypes.array,
-  files: PropTypes.array
+  files: PropTypes.array,
 };
 
 export default FileList;

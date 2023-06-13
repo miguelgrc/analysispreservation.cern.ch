@@ -1,18 +1,20 @@
-import Toggler from "./RichEditorPreviewPlugin";
-import "./styles/RichEditorWidget.css";
-import "katex/dist/katex.min.css";
-import MarkdownIt from "markdown-it";
-import tm from "markdown-it-texmath";
-import "markdown-it-texmath/css/texmath.css";
+import { useRef } from "react";
 import PropTypes from "prop-types";
-import React, { useRef } from "react";
+import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
+import tm from "markdown-it-texmath";
+import Toggler from "./RichEditorPreviewPlugin";
+import katex from "katex";
+
 import "react-markdown-editor-lite/lib/index.css";
+import "katex/dist/katex.min.css";
+import "markdown-it-texmath/css/texmath.css";
+import "./styles/RichEditorWidget.css";
 
 const RichEditorWidget = props => {
   const mdParser = new MarkdownIt();
   mdParser.use(tm, {
-    engine: require("katex"),
+    engine: katex,
     delimiters: "dollars",
     katexOptions: { macros: { "\\RR": "\\mathbb{R}" } },
   });

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Row, Typography } from "antd";
 import SchemaTree from "../containers/SchemaTree";
@@ -18,11 +17,13 @@ const SchemaPreview = ({ schema, selectProperty }) => {
         </Col>
       </Row>
       <Row
+        wrap={false}
         justify="space-between"
-        style={{ paddingLeft: "10px", paddingRight: "10px" }}
+        align="middle"
+        style={{ padding: "0 10px" }}
       >
-        <Typography.Title level={5}>
-          {(schema && schema.get("title")) || "Root"}
+        <Typography.Title level={5} style={{ margin: 0 }} ellipsis>
+          {(schema && schema.get("title")) || "root"}
         </Typography.Title>
         <Button
           type="link"
@@ -30,6 +31,11 @@ const SchemaPreview = ({ schema, selectProperty }) => {
           icon={<SettingOutlined />}
           onClick={() => selectProperty({ schema: [], uiSchema: [] })}
         />
+      </Row>
+      <Row style={{ padding: "0 10px" }}>
+        <Typography.Text type="secondary" level={5}>
+          {schema && schema.get("description")}
+        </Typography.Text>
       </Row>
       <SchemaTree key="schemaTree" />
     </div>

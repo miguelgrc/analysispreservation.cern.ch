@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from "antd";
 import axios from "axios";
-import _debounce from "lodash/debounce";
+import { debounce } from "lodash-es";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -77,12 +77,12 @@ const CernUsers = ({ onChange, formData, uiSchema, readonly }) => {
       title: "Department",
       dataIndex: "department",
       key: "department",
-      render: (tag) => <Tag color="geekblue">{tag}</Tag>,
+      render: tag => <Tag color="geekblue">{tag}</Tag>,
     },
     {
       title: "Action",
       key: "action",
-      render: (item) => (
+      render: item => (
         <Button
           type="primary"
           onClick={() => {
@@ -102,7 +102,7 @@ const CernUsers = ({ onChange, formData, uiSchema, readonly }) => {
     },
   ];
 
-  const fetchLDAPdata = _debounce(
+  const fetchLDAPdata = debounce(
     async ({ searchFor = searchType[0], searchInput }) => {
       setTableLoading(true);
       const response = await axios.get(
@@ -110,7 +110,7 @@ const CernUsers = ({ onChange, formData, uiSchema, readonly }) => {
       );
 
       setLdapData(
-        response.data.map((item) => ({
+        response.data.map(item => ({
           target: searchFor,
           key: item.email ? item.email : item,
           email: item.email ? item.email : item,
@@ -126,9 +126,9 @@ const CernUsers = ({ onChange, formData, uiSchema, readonly }) => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <Modal
-        visible={showModal}
+        open={showModal}
         onCancel={() => {
           setShowModal(false);
           form.resetFields();
@@ -149,7 +149,7 @@ const CernUsers = ({ onChange, formData, uiSchema, readonly }) => {
           {searchType.length > 1 && (
             <Form.Item label="Search For" name="searchFor">
               <Radio.Group buttonStyle="solid">
-                {searchType.map((type) => (
+                {searchType.map(type => (
                   <Radio.Button key={type} value={type}>
                     {type}
                   </Radio.Button>
@@ -215,7 +215,7 @@ const CernUsers = ({ onChange, formData, uiSchema, readonly }) => {
           />
         </Row>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

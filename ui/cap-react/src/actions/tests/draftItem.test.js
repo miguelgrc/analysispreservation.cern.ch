@@ -4,7 +4,7 @@ import * as actions from "../draftItem";
 import * as commonActions from "../common";
 import axios from "axios";
 import { Map } from "immutable";
-import { act } from "react-dom/test-utils";
+import { describe, expect, test, vi } from "vitest";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -24,14 +24,14 @@ const draft = {
   is_owner: true,
   links: {},
   metadata: {
-    general_title: new_title
+    general_title: new_title,
   },
   revision: 1,
   schema: {},
   schemas: {},
   status: "draft",
   type: "deposit",
-  updated: "2020-03-25T11:29:11.735378+00:00"
+  updated: "2020-03-25T11:29:11.735378+00:00",
 };
 
 const response_data = {
@@ -46,14 +46,14 @@ const response_data = {
   is_owner: true,
   links: {},
   metadata: {
-    general_title: new_title
+    general_title: new_title,
   },
   revision: 1,
   schema: {},
   schemas: {},
   status: "draft",
   type: "deposit",
-  updated: "2020-03-25T11:29:11.735378+00:00"
+  updated: "2020-03-25T11:29:11.735378+00:00",
 };
 const response_data_edit = {
   id: "ca91ce9758c748a4b115ffdd706f2cda",
@@ -67,38 +67,36 @@ const response_data_edit = {
   is_owner: true,
   links: {},
   metadata: {
-    general_title: "this is another title"
+    general_title: "this is another title",
   },
   revision: 1,
   schema: {},
   schemas: {},
   status: "draft",
   type: "deposit",
-  updated: "2020-03-25T11:29:11.735378+00:00"
+  updated: "2020-03-25T11:29:11.735378+00:00",
 };
 
-// this id is used from the toast mechanism in order to append the messages
-document.body.innerHTML = "<div id='ct-container'>" + "</div>";
 describe("Action Creators => draftItem", () => {
-  it("Async Patch General Title Success", async () => {
+  test("Async Patch General Title Success", async () => {
     const expectedActions = [
       { type: actions.GENERAL_TITLE_REQUEST },
-      { type: actions.GENERAL_TITLE_SUCCESS, draft }
+      { type: actions.GENERAL_TITLE_SUCCESS, draft },
     ];
 
-    axios.patch = jest.fn(() => {
+    axios.patch = vi.fn(() => {
       return Promise.resolve({
         status: 200,
-        data: response_data
+        data: response_data,
       });
     });
 
     const store = mockStore({
       draftItem: Map({
         metadata: {
-          general_title: "this is my old title"
-        }
-      })
+          general_title: "this is my old title",
+        },
+      }),
     });
 
     await store
@@ -107,25 +105,25 @@ describe("Action Creators => draftItem", () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
-  it("Async Patch General Title Failed from Data", async () => {
+  test("Async Patch General Title Failed from Data", async () => {
     const expectedActions = [
       { type: actions.GENERAL_TITLE_REQUEST },
-      { type: actions.GENERAL_TITLE_SUCCESS, draft }
+      { type: actions.GENERAL_TITLE_SUCCESS, draft },
     ];
 
-    axios.patch = jest.fn(() => {
+    axios.patch = vi.fn(() => {
       return Promise.resolve({
         status: 200,
-        data: response_data_edit
+        data: response_data_edit,
       });
     });
 
     const store = mockStore({
       draftItem: Map({
         metadata: {
-          general_title: "this is my old title"
-        }
-      })
+          general_title: "this is my old title",
+        },
+      }),
     });
 
     await store
@@ -134,25 +132,25 @@ describe("Action Creators => draftItem", () => {
         expect(store.getActions()).not.toEqual(expectedActions);
       });
   });
-  it("Async Failed Patch General Title Error", async () => {
+  test("Async Failed Patch General Title Error", async () => {
     const error = undefined;
     const expectedActions = [
       { type: actions.GENERAL_TITLE_REQUEST },
-      { type: actions.GENERAL_TITLE_ERROR, error }
+      { type: actions.GENERAL_TITLE_ERROR, error },
     ];
 
-    axios.patch = jest.fn(() => {
+    axios.patch = vi.fn(() => {
       return Promise.reject({
-        error: undefined
+        error: undefined,
       });
     });
 
     const store = mockStore({
       draftItem: Map({
         metadata: {
-          general_title: "this is an old title"
-        }
-      })
+          general_title: "this is an old title",
+        },
+      }),
     });
 
     await store
@@ -162,20 +160,20 @@ describe("Action Creators => draftItem", () => {
       });
   });
 
-  it("Async Create Draft Success", async () => {
+  test("Async Create Draft Success", async () => {
     const expectedActions = [
       { type: actions.CREATE_DRAFT_REQUEST },
-      { type: actions.CREATE_DRAFT_SUCCESS, draft }
+      { type: actions.CREATE_DRAFT_SUCCESS, draft },
     ];
 
-    axios.post = jest.fn(() => {
+    axios.post = vi.fn(() => {
       return Promise.resolve({
-        data: draft
+        data: draft,
       });
     });
 
     const store = mockStore({
-      draftItem: Map({})
+      draftItem: Map({}),
     });
 
     await store
@@ -190,23 +188,23 @@ describe("Action Creators => draftItem", () => {
       });
   });
 
-  it("Async Create Draft Error", async () => {
+  test("Async Create Draft Error", async () => {
     const expectedActions = [
       { type: actions.CREATE_DRAFT_REQUEST },
       {
-        type: actions.CREATE_DRAFT_ERROR
-      }
+        type: actions.CREATE_DRAFT_ERROR,
+      },
     ];
 
-    axios.post = jest.fn(() => {
+    axios.post = vi.fn(() => {
       return Promise.reject({
         response: {
-          data: { message: "This is an error message for the create process" }
-        }
+          data: { message: "This is an error message for the create process" },
+        },
       });
     });
     const store = mockStore({
-      draftItem: Map({})
+      draftItem: Map({}),
     });
 
     await store
@@ -221,16 +219,15 @@ describe("Action Creators => draftItem", () => {
       });
   });
 
-  it("Async Publish Draft Success", async () => {
-    document.body.append = "";
+  test("Async Publish Draft Success", async () => {
     const expectedActions = [
       { type: actions.PUBLISH_DRAFT_REQUEST },
-      { type: actions.PUBLISH_DRAFT_SUCCESS, draft }
+      { type: actions.PUBLISH_DRAFT_SUCCESS, draft },
     ];
 
-    axios.post = jest.fn(() => {
+    axios.post = vi.fn(() => {
       return Promise.resolve({
-        data: draft
+        data: draft,
       });
     });
 
@@ -238,52 +235,48 @@ describe("Action Creators => draftItem", () => {
       draftItem: Map({
         links: {
           publish:
-            "http://localhost:3000/deposits/ff517e86453646adab77144c18933717/actions/publish"
-        }
-      })
+            "http://localhost:3000/deposits/ff517e86453646adab77144c18933717/actions/publish",
+        },
+      }),
     });
 
-    act(() => {
-      store.dispatch(actions.postPublishDraft()).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+    await store.dispatch(actions.postPublishDraft()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
-  it("Async Publish Draft Error", async () => {
+  test("Async Publish Draft Error", async () => {
     const expectedActions = [{ type: actions.PUBLISH_DRAFT_REQUEST }];
 
-    axios.post = jest.fn(() => {
+    axios.post = vi.fn(() => {
       return Promise.reject({
-        error: "this is the error from the publish draft"
+        error: "this is the error from the publish draft",
       });
     });
     const store = mockStore({
       draftItem: Map({
         links: {
           publish:
-            "http://localhost:3000/deposits/ff517e86453646adab77144c18933717/actions/publish"
-        }
-      })
+            "http://localhost:3000/deposits/ff517e86453646adab77144c18933717/actions/publish",
+        },
+      }),
     });
 
-    act(() => {
-      store.dispatch(actions.postPublishDraft()).catch(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+    await store.dispatch(actions.postPublishDraft()).catch(() => {
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
-  it("Async Publish Draft Validation Error", async () => {
+  test("Async Publish Draft Validation Error", async () => {
     const expectedActions = [
       { type: actions.PUBLISH_DRAFT_REQUEST },
       {
         type: commonActions.FORM_ERRORS,
-        errors: ["root_basic_info_cadi_id"]
-      }
+        errors: ["root_basic_info_cadi_id"],
+      },
     ];
 
-    axios.post = jest.fn(() => {
+    axios.post = vi.fn(() => {
       return Promise.reject({
         response: {
           status: 422,
@@ -292,26 +285,24 @@ describe("Action Creators => draftItem", () => {
             errors: [
               {
                 field: ["basic_info", "cadi_id"],
-                message: "'cadi_id' is a required property"
-              }
-            ]
-          }
-        }
+                message: "'cadi_id' is a required property",
+              },
+            ],
+          },
+        },
       });
     });
     const store = mockStore({
       draftItem: Map({
         links: {
           publish:
-            "http://localhost:3000/deposits/ff517e86453646adab77144c18933717/actions/publish"
-        }
-      })
+            "http://localhost:3000/deposits/ff517e86453646adab77144c18933717/actions/publish",
+        },
+      }),
     });
 
-    act(() => {
-      store.dispatch(actions.postPublishDraft()).catch(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+    await store.dispatch(actions.postPublishDraft()).catch(() => {
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

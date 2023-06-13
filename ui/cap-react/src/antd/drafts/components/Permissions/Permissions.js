@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { permissionsPerUser } from "../../../utils";
 import DropDown from "./DropDown";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -15,9 +17,7 @@ import {
   Typography,
 } from "antd";
 import axios from "axios";
-import _debounce from "lodash/debounce";
-import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
+import { debounce } from "lodash-es";
 
 const Permissions = ({
   draft_id,
@@ -180,7 +180,7 @@ const Permissions = ({
     setEmailsArray(emailsArray);
   }, [permissions]);
 
-  const fetchLDAPdata = _debounce(async ({ searchFor, searchInput }) => {
+  const fetchLDAPdata = debounce(async ({ searchFor, searchInput }) => {
     setTableLoading(true);
     const response = await axios.get(
       `/api/services/ldap/${searchFor}/mail?query=${searchInput}`
@@ -203,9 +203,9 @@ const Permissions = ({
 
   const [displayModal, setDisplayModal] = useState(false);
   return (
-    <React.Fragment>
+    <>
       <Modal
-        visible={displayModal}
+        open={displayModal}
         onCancel={() => {
           setDisplayModal(false);
           form.resetFields();
@@ -268,7 +268,7 @@ const Permissions = ({
           pagination={{ pageSize: 5 }}
         />
       </Card>
-    </React.Fragment>
+    </>
   );
 };
 

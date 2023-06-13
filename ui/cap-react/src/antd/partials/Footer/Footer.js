@@ -1,4 +1,3 @@
-import React from "react";
 import { Row, Typography, Space } from "antd";
 import { Link } from "react-router-dom";
 
@@ -12,7 +11,7 @@ const Footer = () => {
       style={{ padding: "5px", background: "#001529" }}
     >
       <Space direction="horizontal" size="middle">
-        <Text style={{ color: "#fff" }}>
+        <Text style={{ color: "rgba(255, 255, 255, 0.65)" }}>
           Copyright {new Date().getFullYear()} © CERN. Created & Hosted by CERN.
           Powered by Invenio Software.
         </Text>

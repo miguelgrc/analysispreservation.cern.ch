@@ -1,11 +1,10 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { TagCloud } from "react-tagcloud";
 const data = [
   {
     value: "from EXO group",
     count: 3,
-    link: "/search?q=&cms_working_group=EXO"
+    link: "/search?q=&cms_working_group=EXO",
   },
   { value: "see all drafts", count: 2, link: "/drafts?q=" },
   { value: "search for muon", count: 2, link: "/search?q=object:muon" },
@@ -13,7 +12,7 @@ const data = [
   {
     value: "all my published analysis",
     count: 1,
-    link: "/search?q=&by_me=True"
+    link: "/search?q=&by_me=True",
   },
   { value: "from QCD", count: 2, link: "/search?q=&cms_working_group=QCD" },
   { value: "my drafts", count: 1, link: "/drafts?q=&by_me=True" },
@@ -29,13 +28,13 @@ const data = [
   {
     value: "harvested from CADI and not edited yet",
     count: 3,
-    link: "/drafts?q=fetched_from:cadi NOT user_edited:true"
+    link: "/drafts?q=fetched_from:cadi NOT user_edited:true",
   },
   {
     value: "all from HIG group",
     count: 2,
-    link: "/search?q=&cms_working_group=HIG"
-  }
+    link: "/search?q=&cms_working_group=HIG",
+  },
 ];
 const QuickSearch = ({ push }) => {
   return (
@@ -47,7 +46,7 @@ const QuickSearch = ({ push }) => {
       tags={data}
       colorOptions={{
         luminosity: "dark",
-        hue: "blue"
+        hue: "blue",
       }}
       align="center"
       onClick={tag => push(tag.link)}
@@ -56,7 +55,7 @@ const QuickSearch = ({ push }) => {
 };
 
 QuickSearch.propTypes = {
-  push: PropTypes.func
+  push: PropTypes.func,
 };
 
 export default QuickSearch;

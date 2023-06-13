@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Button, List } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -11,7 +10,7 @@ const ReviewList = ({
   reviewPublished,
   reviewDraft,
   draft_id,
-  canReview
+  canReview,
 }) => {
   return (
     <List
@@ -30,7 +29,7 @@ const ReviewList = ({
                     ? reviewPublished(
                         {
                           action: "resolve",
-                          id: item.id
+                          id: item.id,
                         },
                         "resolved"
                       )
@@ -38,7 +37,7 @@ const ReviewList = ({
                         draft_id,
                         {
                           action: "resolve",
-                          id: item.id
+                          id: item.id,
                         },
                         "resolved"
                       )
@@ -56,7 +55,7 @@ const ReviewList = ({
                     ? reviewPublished(
                         {
                           id: item.id,
-                          action: "delete"
+                          action: "delete",
                         },
                         "deleted"
                       )
@@ -64,12 +63,12 @@ const ReviewList = ({
                         draft_id,
                         {
                           id: item.id,
-                          action: "delete"
+                          action: "delete",
                         },
                         "deleted"
                       )
                 }
-              />
+              />,
             ]
           }
         >
@@ -91,7 +90,7 @@ ReviewList.propTypes = {
   canReview: PropTypes.bool,
   reviewPublished: PropTypes.func,
   reviewDraft: PropTypes.func,
-  draft_id: PropTypes.string
+  draft_id: PropTypes.string,
 };
 
 export default ReviewList;

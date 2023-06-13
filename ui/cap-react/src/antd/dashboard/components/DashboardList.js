@@ -1,11 +1,11 @@
-import TypeTags from "../../partials/TypeTags";
-import DashboardListItem from "./DashboardListItem";
-import DashboardListLoader from "./Loader";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Row, List, Col, Typography, Tooltip } from "antd";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Row, List, Col, Typography, Tooltip } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import DashboardListLoader from "./Loader";
+import DashboardListItem from "./DashboardListItem";
+import TypeTags from "../../partials/TypeTags";
 
 const DashboardList = ({
   header = "",
@@ -60,6 +60,10 @@ const DashboardList = ({
                 ? `/drafts/${item.id}`
                 : `/published/${item.id}`
             }
+            style={{
+              boxShadow: "0px 20px 1px -20px darkgray",
+              backgroundColor: "blue !important",
+            }}
           >
             <DashboardListItem item={item} listType={listType} />
           </Link>

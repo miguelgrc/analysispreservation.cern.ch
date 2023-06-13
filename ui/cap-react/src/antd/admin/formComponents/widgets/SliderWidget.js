@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Slider } from "antd";
 
@@ -24,8 +24,10 @@ const SliderWidget = ({ schema, onChange, value }) => {
       step={null}
       min={0}
       max={Object.keys(marks).length - 1}
-      tooltipVisible={false}
       onChange={handleChange}
+      tooltip={{
+        open: false,
+      }}
     />
   );
 };

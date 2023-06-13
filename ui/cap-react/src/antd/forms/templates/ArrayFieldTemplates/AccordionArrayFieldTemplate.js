@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Collapse } from "antd";
 import ArrayFieldTemplateItem from "./ArrayFieldTemplateItem";
@@ -27,7 +26,7 @@ const AccordionArrayFieldTemplate = ({ items = [], formContext, id }) => {
 AccordionArrayFieldTemplate.propTypes = {
   items: PropTypes.array,
   formContext: PropTypes.object,
-  id: PropTypes.string
+  id: PropTypes.string,
 };
 
 export default AccordionArrayFieldTemplate;

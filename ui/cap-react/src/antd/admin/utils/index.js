@@ -9,7 +9,10 @@ export const slugify = text => {
     .replace(/-+$/, ""); // Trim - from end of text
 };
 
-export const _initSchemaStructure = (name, description) => ({
+export const _initSchemaStructure = (
+  name = "New schema",
+  description = ""
+) => ({
   schema: {
     title: name,
     description: description,
@@ -36,14 +39,14 @@ let _addErrors = (errors, path) => {
   Object.keys(errors).map(error => {
     if (error != "__errors" && error != "addError") {
       _addErrors(errors[error], {
-        schema: [...path, "properties", error],
-        uiSchema: [...path, error],
+        schema: [...path.schema, "properties", error],
+        uiSchema: [...path.uiSchema, error],
       });
     }
   });
   return errors;
 };
-export const _validate = function(formData, errors) {
+export const _validate = function (formData, errors) {
   return _addErrors(errors, { schema: [], uiSchema: [] });
 };
 

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Space, Tag } from "antd";
 const SelectContentType = ({ contentTypes, select }) => {
@@ -21,7 +20,7 @@ const SelectContentType = ({ contentTypes, select }) => {
 
 SelectContentType.propTypes = {
   contentTypes: PropTypes.object,
-  select: PropTypes.func
+  select: PropTypes.func,
 };
 
 export default SelectContentType;

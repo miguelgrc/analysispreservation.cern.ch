@@ -28,6 +28,7 @@ node_modules
 
 #dist folder
 dist
+bundle-stats.html
 
 # IDEA/Webstorm project files
 .idea
@@ -40,3 +41,5 @@ dist
 .DS_Store
 
 cypress/screenshots
+
+.env

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Form from "../../forms/Form";
 
@@ -11,7 +10,7 @@ const JSONSchemaPreviewer = ({
   onChange,
   onSubmit,
   formData,
-  className
+  className,
 }) => {
   return (
     schema && (
@@ -22,7 +21,7 @@ const JSONSchemaPreviewer = ({
         uiSchema={{
           "ui:readonly": true,
           ...uiSchema,
-          "ui:object": display
+          "ui:object": display,
         }}
         liveValidate={false}
         noValidate={true}
@@ -34,7 +33,7 @@ const JSONSchemaPreviewer = ({
         formContext={{
           tabView: display === "tabView",
           readonlyPreview: true,
-          isPublished: isPublished
+          isPublished: isPublished,
         }}
       >
         {children}
@@ -50,7 +49,7 @@ JSONSchemaPreviewer.propTypes = {
   schema: PropTypes.object,
   uiSchema: PropTypes.object,
   onChange: PropTypes.func,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
 };
 
 export default JSONSchemaPreviewer;

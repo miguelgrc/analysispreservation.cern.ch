@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Row, Space, Typography } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
@@ -40,7 +39,7 @@ const IntegrationConnected = ({ name, data, onClick }) => {
 IntegrationConnected.propTypes = {
   name: PropTypes.string,
   data: PropTypes.object,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default IntegrationConnected;

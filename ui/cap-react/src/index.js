@@ -1,33 +1,16 @@
-/* eslint-disable import/default */
-
-import React from "react";
-import { render } from "react-dom";
-import { AppContainer } from "react-hot-loader";
+import { createRoot } from "react-dom/client";
 import store, { history } from "./store/configureStore";
 import Root from "./antd/Root";
 import * as Sentry from "@sentry/react";
 
-import "./styles/styles.scss";
+import "antd/dist/reset.css";
+import "./style.less";
 
 if (process.env.SENTRY_UI_DSN) {
   Sentry.init({ dsn: process.env.SENTRY_UI_DSN });
 }
 
-render(
-  <AppContainer>
-    <Root store={store} history={history} />
-  </AppContainer>,
-  document.getElementById("app")
-);
+const container = document.getElementById("app");
+const root = createRoot(container);
 
-if (module.hot) {
-  module.hot.accept("./antd/Root", () => {
-    const NewRoot = require("./antd/Root").default;
-    render(
-      <AppContainer>
-        <NewRoot store={store} history={history} />
-      </AppContainer>,
-      document.getElementById("app")
-    );
-  });
-}
+root.render(<Root store={store} history={history} />);

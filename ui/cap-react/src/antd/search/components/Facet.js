@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Space, Typography, DatePicker } from "antd";
 import FacetItem from "./FacetItem";
@@ -18,7 +17,7 @@ const Facet = ({
   onChange,
   history,
 }) => {
-  const getContentByType = (type) => {
+  const getContentByType = type => {
     const choices = {
       range: <RangeSlider items={facet.get(category)} category={category} />,
       daterange: (
@@ -55,7 +54,7 @@ const Facet = ({
     return choices[type];
   };
 
-  const getFacetTitle = (title) =>
+  const getFacetTitle = title =>
     facet.hasIn([category, "meta", "title"])
       ? facet.getIn([category, "meta", "title"])
       : title.replace(/_/g, " ").replace(/\w\S*/g, function (txt) {

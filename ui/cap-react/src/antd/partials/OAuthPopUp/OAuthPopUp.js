@@ -1,13 +1,13 @@
-import React from "react";
+import { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-export default class OauthPopup extends React.PureComponent {
+export default class OauthPopup extends PureComponent {
   constructor(props) {
     super(props);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
-    window["loginCallBack"] = function() {
+    window["loginCallBack"] = function () {
       if (props.loginCallBack) props.loginCallBack(urlParams.get("next"));
       return null;
     };
@@ -38,5 +38,5 @@ OauthPopup.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   url: PropTypes.string,
-  loginCallBack: PropTypes.func
+  loginCallBack: PropTypes.func,
 };

@@ -3,3 +3,7 @@
 cap
 .prettierignore
 yarn.lock
+.gitignore
+Dockerfile
+*.svg
+.npmrc

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Descriptions, Space, Tag, Typography } from "antd";
 
@@ -10,18 +9,16 @@ const Ror = ({ data }) => {
           <Typography.Title level={5} style={{ marginBottom: 0 }}>
             {data.name}
           </Typography.Title>
-          {data.acronyms &&
-            data.acronyms.length > 0 && <Tag color="blue">{data.acronyms}</Tag>}
+          {data.acronyms && data.acronyms.length > 0 && (
+            <Tag color="blue">{data.acronyms}</Tag>
+          )}
         </Space>
       </Descriptions.Item>
-      {/* <Descriptions.Item label="Acronym">
-        {data.acronyms && data.acronyms.length > 0 && data.acronyms}
-      </Descriptions.Item> */}
       <Descriptions.Item label="Country">
         {data.country.country_name} ({data.country.country_code})
       </Descriptions.Item>
       <Descriptions.Item label="Type">
-        {data.types && data.types.map(type => <Tag>{type}</Tag>)}
+        {data.types && data.types.map(type => <Tag key={type}>{type}</Tag>)}
       </Descriptions.Item>
       <Descriptions.Item label="URL">
         <a href={data.links}>{data.links}</a>

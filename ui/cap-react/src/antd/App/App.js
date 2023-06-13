@@ -1,31 +1,29 @@
-import React, { useEffect } from "react";
-import Loadable from "react-loadable";
+import { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-
-import "./App.less";
-import AboutPage from "../about";
-import requireAuth from "../auth/AuthorizationRequired";
-import noRequireAuth from "../auth/NoAuthorizationRequired";
-import useTrackPageViews from "../hooks/useTrackPageViews";
-import IndexPage from "../index/IndexPage";
-import DocumentTitle from "../partials/DocumentTitle";
-import Footer from "../partials/Footer";
-import Header from "../partials/Header";
-import PolicyPage from "../policy";
-import { HOME, WELCOME, ABOUT, POLICY, CMS, SCHEMAS } from "../routes";
-import Loading from "../routes/Loading";
-import SchemasPage from "../schemas";
-import ErrorPage from "../utils/ErrorPage";
-import WelcomePage from "../welcome";
-import * as Sentry from "@sentry/react";
-import { Layout, Row, Spin } from "antd";
 import PropTypes from "prop-types";
+import WelcomePage from "../welcome";
+import IndexPage from "../index/IndexPage";
 
-const CMSIndex = Loadable({
-  loader: () => import("../admin"),
-  loading: Loading,
-  delay: 300,
-});
+import AboutPage from "../about";
+import PolicyPage from "../policy";
+import SchemasPage from "../schemas";
+
+import noRequireAuth from "../auth/NoAuthorizationRequired";
+import requireAuth from "../auth/AuthorizationRequired";
+
+import Header from "../partials/Header";
+import Footer from "../partials/Footer";
+
+import DocumentTitle from "../partials/DocumentTitle";
+import { Layout, Row, Spin } from "antd";
+
+import { HOME, WELCOME, ABOUT, POLICY, CMS, SCHEMAS } from "../routes";
+import ErrorPage from "../utils/ErrorPage";
+import * as Sentry from "@sentry/react";
+import useTrackPageViews from "../hooks/useTrackPageViews";
+import { lazy } from "react";
+
+const AdminPage = lazy(() => import("../admin"));
 
 const App = ({ initCurrentUser, loadingInit, history, roles }) => {
   useEffect(() => {
@@ -62,7 +60,7 @@ const App = ({ initCurrentUser, loadingInit, history, roles }) => {
               <Route path={WELCOME} component={noRequireAuth(WelcomePage)} />
               <Route path={ABOUT} component={AboutPage} />
               <Route path={POLICY} component={PolicyPage} />
-              {isAdmin && <Route path={CMS} component={CMSIndex} />}
+              {isAdmin && <Route path={CMS} component={AdminPage} />}
               <Route path={SCHEMAS} component={SchemasPage} />
               <Route path={HOME} component={requireAuth(IndexPage)} />
             </Switch>

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
@@ -19,7 +18,7 @@ const EllipsisMiddle = ({ suffixCount, children, copyable }) => {
 EllipsisMiddle.propTypes = {
   copyable: PropTypes.bool,
   children: PropTypes.string,
-  suffixCount: PropTypes.number
+  suffixCount: PropTypes.number,
 };
 
 export default EllipsisMiddle;

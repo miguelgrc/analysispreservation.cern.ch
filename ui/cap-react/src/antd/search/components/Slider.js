@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Slider } from "antd";
 import queryString from "query-string";
@@ -8,7 +8,7 @@ const RangeSlider = ({ items, category, history }) => {
   const { range } = useMemo(() => {
     let barChartData = {};
     let range = [];
-    items.get("buckets").map((item) => {
+    items.get("buckets").map(item => {
       barChartData[item.get("key_as_string")] = item.get("doc_count");
       range.push(new Date(item.get("key")).getFullYear());
     });
@@ -49,7 +49,6 @@ const RangeSlider = ({ items, category, history }) => {
       min={range[0]}
       max={range[1]}
       range
-      tooltipVisible={false}
       defaultValue={range}
       marks={{
         [sliderRange[0]]: sliderRange[0],
@@ -59,6 +58,9 @@ const RangeSlider = ({ items, category, history }) => {
       value={[sliderRange[0], sliderRange[1]]}
       onAfterChange={onChange}
       onChange={setSliderRange}
+      tooltip={{
+        open: false,
+      }}
     />
   );
 };

@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { Form, Input, Tag } from "antd";
+import { Form, Input, Tag, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import _ from "lodash";
+import { isEmpty } from "lodash-es";
 
 const TagsField = ({ schema, onChange, readonly, formData }) => {
   const [tags, setTags] = useState([]);
@@ -10,21 +10,18 @@ const TagsField = ({ schema, onChange, readonly, formData }) => {
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
 
-  useEffect(
-    () => {
-      if (inputVisible) {
-        inputRef.current.focus();
-      }
-    },
-    [inputVisible]
-  );
+  useEffect(() => {
+    if (inputVisible) {
+      inputRef.current.focus();
+    }
+  }, [inputVisible]);
 
   useEffect(() => {
     setTags(getInitialTags());
   }, []);
 
   const getInitialTags = () => {
-    if (!formData || _.isEmpty(formData)) {
+    if (!formData || isEmpty(formData)) {
       return [];
     } else if (schema.type === "array") {
       return formData;
@@ -61,8 +58,9 @@ const TagsField = ({ schema, onChange, readonly, formData }) => {
     setInputVisible(false);
   };
 
-  const handleEnter = () => {
+  const handleEnter = e => {
     handleInputConfirm(resetInput);
+    e.preventDefault();
   };
 
   const handleBlur = () => {
@@ -71,9 +69,14 @@ const TagsField = ({ schema, onChange, readonly, formData }) => {
   };
 
   return (
-    <div>
+    <Space size={[0, 8]} wrap>
       {tags.map(tag => (
-        <Tag key={tag} closable={!readonly} onClose={() => handleClose(tag)}>
+        <Tag
+          key={tag}
+          closable={!readonly}
+          onClose={() => handleClose(tag)}
+          style={{ backgroundColor: "white" }}
+        >
           {tag}
         </Tag>
       ))}
@@ -81,6 +84,7 @@ const TagsField = ({ schema, onChange, readonly, formData }) => {
         <Form name="tags">
           <Form.Item
             name="newTag"
+            style={{ marginBottom: 0 }}
             rules={[
               {
                 pattern: schema.tagPattern
@@ -105,16 +109,19 @@ const TagsField = ({ schema, onChange, readonly, formData }) => {
           </Form.Item>
         </Form>
       )}
-      {!inputVisible &&
-        !readonly && (
-          <Tag
-            onClick={() => setInputVisible(true)}
-            style={{ borderStyle: "dashed", cursor: "pointer" }}
-          >
-            <PlusOutlined /> New Tag
-          </Tag>
-        )}
-    </div>
+      {!inputVisible && !readonly && (
+        <Tag
+          onClick={() => setInputVisible(true)}
+          style={{
+            borderStyle: "dashed",
+            cursor: "pointer",
+            backgroundColor: "#F6F7F8",
+          }}
+        >
+          <PlusOutlined /> New Tag
+        </Tag>
+      )}
+    </Space>
   );
 };
 

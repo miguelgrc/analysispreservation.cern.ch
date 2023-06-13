@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MaskedInput from "./MaskedInput";
 import { Button, InputNumber } from "antd";
 import axios from "axios";
@@ -39,8 +39,8 @@ const TextWidget = ({
       target.value === ""
         ? options.emptyValue
         : convertToUppercase
-          ? target.value.toUpperCase()
-          : target.value
+        ? target.value.toUpperCase()
+        : target.value
     );
   };
 
@@ -51,9 +51,8 @@ const TextWidget = ({
   const [message, setMessage] = useState(null);
 
   const [apiCalling, setApiCalling] = useState(false);
-  const [apiCalledWithCurrentState, setApiCalledWithCurrentState] = useState(
-    false
-  );
+  const [apiCalledWithCurrentState, setApiCalledWithCurrentState] =
+    useState(false);
 
   const _replace_hash_with_current_indexes = path => {
     let indexes = id.split("_").filter(item => !isNaN(item)),
@@ -211,7 +210,4 @@ TextWidget.propTypes = {
   onFocus: PropTypes.func,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TextWidget);
+export default connect(mapStateToProps, mapDispatchToProps)(TextWidget);
