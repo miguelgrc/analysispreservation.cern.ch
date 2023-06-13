@@ -38,6 +38,16 @@ const Dashboard = ({ fetchDashboard, results, loading, groups }) => {
       </Link>
     ));
 
+  const generateCollectionTags = groups =>
+    groups.map(e => (
+      <Link
+        key={e["deposit_group"]}
+        to={`${COLLECTION_BASE}/${e["deposit_group"]}`}
+      >
+        <Tag>{e["name"]}</Tag>
+      </Link>
+    ));
+
   return (
     <Row style={{ padding: "10px" }}>
       {showModal && (
@@ -98,6 +108,29 @@ const Dashboard = ({ fetchDashboard, results, loading, groups }) => {
 
         <Card title="Quick Search" style={{ textAlign: "center" }}>
           <DashboardQuickSearch />
+        </Card>
+
+        <Card
+          title={<Typography.Text strong>Your Collections</Typography.Text>}
+          size="small"
+          headStyle={{ height: "46px" }}
+          style={{ marginTop: "20px" }}
+        >
+          <Space size={[0, 8]} wrap>
+            {generateCollectionTags(
+              groups.toJS().slice(0, MAX_DISPLAYED_COLLECTIONS)
+            )}
+            {groups.size > MAX_DISPLAYED_COLLECTIONS && (
+              <Button
+                type="link"
+                size="small"
+                onClick={() => setShowModal(true)}
+                style={{ textAlign: "center" }}
+              >
+                Show All
+              </Button>
+            )}
+          </Space>
         </Card>
 
         <Card

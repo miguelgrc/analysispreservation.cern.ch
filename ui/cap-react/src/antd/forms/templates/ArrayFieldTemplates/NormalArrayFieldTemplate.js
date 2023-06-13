@@ -2,17 +2,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 
 import Button from "antd/lib/button";
-import {
-  Row,
-  Col,
-  Modal,
-  Space,
-  Tag,
-  Checkbox,
-  Table,
-  Typography,
-  theme,
-} from "antd";
+import { Row, Col, Modal, Space, Tag, Checkbox, Table, theme } from "antd";
 import PlusCircleOutlined from "@ant-design/icons/PlusCircleOutlined";
 
 import ArrayFieldTemplateItem from "./ArrayFieldTemplateItem";
@@ -46,7 +36,6 @@ const NormalArrayFieldTemplate = ({
   required,
   schema,
   title,
-  TitleField,
   uiSchema,
   formData,
 }) => {
@@ -370,7 +359,6 @@ NormalArrayFieldTemplate.propTypes = {
   required: PropTypes.bool,
   schema: PropTypes.object,
   title: PropTypes.string,
-  TitleField: PropTypes.node,
   uiSchema: PropTypes.object,
   formData: PropTypes.object,
 };

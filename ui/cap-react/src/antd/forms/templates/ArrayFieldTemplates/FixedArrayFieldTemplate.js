@@ -11,7 +11,6 @@ const FixedArrayFieldTemplate = ({
   className,
   disabled,
   formContext,
-  // formData,
   idSchema,
   items,
   options,
@@ -49,25 +48,24 @@ const FixedArrayFieldTemplate = ({
           </Row>
         </Col>
 
-        {canAdd &&
-          !readonly && (
-            <Col span={24}>
-              <Row gutter={rowGutter} justify="end">
-                <Col flex="192px">
-                  <Button
-                    block
-                    className="array-item-add"
-                    disabled={disabled}
-                    onClick={onAddClick}
-                    type="primary"
-                  >
-                    <PlusCircleOutlined /> Add{" "}
-                    {options && options.addLabel ? options.addLabel : `Item`}
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          )}
+        {canAdd && !readonly && (
+          <Col span={24}>
+            <Row gutter={rowGutter} justify="end">
+              <Col flex="192px">
+                <Button
+                  block
+                  className="array-item-add"
+                  disabled={disabled}
+                  onClick={onAddClick}
+                  type="primary"
+                >
+                  <PlusCircleOutlined /> Add{" "}
+                  {options && options.addLabel ? options.addLabel : `Item`}
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        )}
       </Row>
     </fieldset>
   );
@@ -86,7 +84,6 @@ FixedArrayFieldTemplate.propTypes = {
   required: PropTypes.bool,
   schema: PropTypes.object,
   title: PropTypes.string,
-  TitleField: PropTypes.node,
   uiSchema: PropTypes.object,
 };
 
